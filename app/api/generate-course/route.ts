@@ -1,35 +1,34 @@
-// pages/api/generate-course.ts
+// app/api/generate-course/route.ts
+import { NextRequest, NextResponse } from 'next/server';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-import { NextApiRequest, NextApiResponse } from "next";
-
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
-  }
-
-  const { courseName } = req.body;
-
-  if (!courseName) {
-    return res.status(400).json({ error: "Course name is required" });
-  }
-
+export async function POST(request: NextRequest) {
   try {
-    // Replace this with actual Gemini API logic
-    const response = await fetch("https://gemini-api.example.com/generate", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ courseName }),
-    });
+    const { courseName } = await request.json();
 
-    if (!response.ok) throw new Error("Failed to fetch from Gemini API");
+    if (!courseName) {
+      return NextResponse.json({ error: "Course name is required" }, { status: 400 });
+    }
 
-    const data = await response.json();
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
-    res.status(200).json({ generatedContent: data.generatedContent });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Internal server error" });
+    const prompt = `Create a comprehensive, professional course outline for: ${courseName}. 
+    Provide a detailed structure including:
+    - Comprehensive course description
+    - Detailed learning objectives
+    - Curriculum breakdown with modules and topics
+    - Recommended learning resources
+    - Potential hands-on projects or assignments
+    - Estimated course duration
+    
+    Format the response in a clear, professional manner, suitable for a comprehensive educational program.`;
+
+    const result = await model.generateContent(prompt);
+    const generatedContent = await result.response.text();
+
+    return NextResponse.json({ generatedContent }, { status: 200 });
+  } catch (error: any) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
