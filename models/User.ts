@@ -1,4 +1,4 @@
-import  mongoose, { Schema, model } from  "mongoose";
+import mongoose, { Schema, model } from "mongoose";
 
 export interface UserDocument {
   _id: string;
@@ -9,7 +9,7 @@ export interface UserDocument {
   image: string;
   createdAt: Date;
   updatedAt: Date;
-  points: number;
+  points: number; // Added points field
 }
 
 const UserSchema = new Schema<UserDocument>({
@@ -18,7 +18,7 @@ const UserSchema = new Schema<UserDocument>({
     unique: true,
     required: [true, "Email is required"],
     match: [
-      /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+      /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/,
       "Email is invalid",
     ],
   },
@@ -30,6 +30,14 @@ const UserSchema = new Schema<UserDocument>({
     type: String,
     required: [true, "Name is required"]
   },
+  phone: {
+    type: String,
+    required: false // Optional field
+  },
+  image: {
+    type: String,
+    required: false // Optional field
+  },
   points: {
     type: Number,
     default: 0 // Default points value
@@ -40,5 +48,5 @@ const UserSchema = new Schema<UserDocument>({
 }
 );
 
-const  User  =  mongoose.models?.User  ||  model<UserDocument>('User', UserSchema);
-export  default  User;
+const User = mongoose.models?.User || model<UserDocument>('User', UserSchema);
+export default User;

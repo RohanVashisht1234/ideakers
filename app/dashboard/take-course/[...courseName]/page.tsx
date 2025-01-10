@@ -21,7 +21,6 @@ interface CourseContent {
 
 export default function TakeCoursePage() {
   const currentDate = new Date("2025-01-10T22:20:34Z");
-  const currentUser = "RohanVashisht1234";
   
   const { status, data: session } = useSession();
   const router = useRouter();
@@ -140,7 +139,7 @@ export default function TakeCoursePage() {
           <div className="flex items-center gap-2">
             <HiUser className="text-purple-600 dark:text-purple-400" />
             <Badge color="purple" size="sm">
-              {session?.user?.email || currentUser}
+              {session?.user?.name}
             </Badge>
           </div>
           <DarkThemeToggle />
