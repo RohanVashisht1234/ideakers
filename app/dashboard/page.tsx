@@ -10,7 +10,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { DarkThemeToggle, Flowbite } from "flowbite-react";
 import Link from "next/link";
-export default function dashboard() {
+export default function Dashboard() {
   const { status } = useSession();
   const router = useRouter();
   if (status === "authenticated") {
