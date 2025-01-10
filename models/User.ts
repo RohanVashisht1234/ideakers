@@ -9,6 +9,7 @@ export interface UserDocument {
   image: string;
   createdAt: Date;
   updatedAt: Date;
+  points: number;
 }
 
 const UserSchema = new Schema<UserDocument>({
