@@ -26,78 +26,127 @@ import {
   HiShieldCheck,
   HiCode,
   HiGlobe,
+  HiChip,
 } from "react-icons/hi";
 
 export default function Home() {
   const { status } = useSession();
+  const currentDate = new Date("2025-01-10T21:34:06Z");
+  const formattedDate = currentDate.toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
 
   const showSession = () => {
     if (status === "authenticated") return redirect("/dashboard");
-    if (status === "loading") return <div>Loading...</div>;
+    if (status === "loading")
+      return (
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-white to-purple-50 dark:from-gray-900 dark:to-purple-950">
+          <div className="text-purple-600 text-xl">Loading...</div>
+        </div>
+      );
 
     return (
       <Flowbite>
-        <div className="min-h-screen bg-white dark:bg-gray-900 overflow-x-hidden">
+        <div className="min-h-screen bg-gradient-to-br from-white to-purple-50 dark:from-gray-900 dark:to-purple-950 overflow-x-hidden">
           {/* Navbar */}
           <Navbar
             fluid
-            rounded
-            className="sticky top-0 z-50 bg-white/80 dark:bg-gray-800/80 backdrop-blur-md"
+            className="sticky top-0 z-50 bg-white/90 dark:bg-gray-900/90 backdrop-blur-md border-b border-gray-200 dark:border-gray-700"
           >
             <NavbarBrand href="/">
-              <Image
-                src="/logo.svg"
-                alt="Learnify Logo"
-                width={40}
-                height={40}
-                className="mr-3"
-              />
-              <span className="self-center text-xl font-semibold dark:text-white">
+              <HiChip className="text-2xl text-purple-600 dark:text-purple-400 mr-2" />
+              <span className="self-center text-xl font-semibold text-purple-600 dark:text-purple-400">
                 Learnify
               </span>
             </NavbarBrand>
             <NavbarToggle />
             <NavbarCollapse>
-              <NavbarLink href="#features">Features</NavbarLink>
-              <NavbarLink href="#pricing">Pricing</NavbarLink>
-              <NavbarLink href="#about">About</NavbarLink>
-              <NavbarLink href="/login">Login</NavbarLink>
+              <NavbarLink
+                href="#features"
+                className="hover:text-purple-600 dark:hover:text-purple-400"
+              >
+                Features
+              </NavbarLink>
+              <NavbarLink
+                href="#pricing"
+                className="hover:text-purple-600 dark:hover:text-purple-400"
+              >
+                Pricing
+              </NavbarLink>
+              <NavbarLink
+                href="#about"
+                className="hover:text-purple-600 dark:hover:text-purple-400"
+              >
+                About
+              </NavbarLink>
+              <NavbarLink
+                href="/login"
+                className="hover:text-purple-600 dark:hover:text-purple-400"
+              >
+                Login
+              </NavbarLink>
             </NavbarCollapse>
             <DarkThemeToggle />
           </Navbar>
-
           {/* Hero Section */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.7 }}
-            className="container mx-auto px-4 py-16 grid md:grid-cols-2 gap-10 items-center"
+            className="container mx-auto px-4 py-20 grid md:grid-cols-2 gap-10 items-center"
           >
             <div className="text-center md:text-left">
-              <h1 className="text-5xl font-bold mb-6 text-gray-900 dark:text-white">
-                Transform Your Learning Journey
-              </h1>
-              <p className="text-xl mb-8 text-gray-600 dark:text-gray-300">
-                Personalized learning experiences powered by AI
-              </p>
-              <div className="flex justify-center md:justify-start space-x-4">
-                <Button gradientDuoTone="purpleToPink" size="lg">
-                  Get Started
-                </Button>
-                <Button outline gradientDuoTone="purpleToPink" size="lg">
-                  Learn More
-                </Button>
-              </div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-400 text-transparent bg-clip-text">
+                  Transform Your Learning Journey
+                </h1>
+                <p className="text-xl mb-8 text-gray-600 dark:text-gray-300">
+                  Personalized learning experiences powered by AI. Join{" "}
+                  {Math.floor(Math.random() * 50000 + 10000).toLocaleString()}+
+                  learners today.
+                </p>
+                <div className="flex justify-center md:justify-start space-x-4">
+                  <Button
+                    gradientDuoTone="purpleToPink"
+                    size="lg"
+                    className="shadow-lg hover:shadow-purple-500/30 transition-all duration-300"
+                  >
+                    Get Started Free
+                  </Button>
+                  <Button
+                    outline
+                    gradientDuoTone="purpleToPink"
+                    size="lg"
+                    className="shadow-lg hover:shadow-purple-500/20 transition-all duration-300"
+                  >
+                    View Courses
+                  </Button>
+                </div>
+              </motion.div>
             </div>
-            <div>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5 }}
+              className="relative"
+            >
+              <div className="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-purple-600/20 dark:bg-purple-900/20 rounded-full blur-3xl" />
               <Image
                 src="/hero-illustration.png"
                 alt="Learning Illustration"
                 width={500}
                 height={400}
-                className="w-full h-auto"
+                className="w-full h-auto relative z-10"
+                priority
               />
-            </div>
+            </motion.div>
           </motion.div>
 
           {/* Features Section */}
@@ -106,75 +155,109 @@ export default function Home() {
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-gray-50 dark:bg-gray-800 py-16"
+            viewport={{ once: true }}
+            className="bg-white dark:bg-gray-800 py-20"
           >
-            <div className="container mx-auto text-center">
-              <h2 className="text-4xl font-bold mb-12 text-gray-900 dark:text-white">
-                Powerful Learning Features
-              </h2>
+            <div className="container mx-auto px-4">
+              <div className="text-center max-w-3xl mx-auto mb-16">
+                <h2 className="text-4xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-400 text-transparent bg-clip-text">
+                  Powerful Learning Features
+                </h2>
+                <p className="text-gray-600 dark:text-gray-300 text-lg">
+                  Experience the future of education with our cutting-edge
+                  features designed to enhance your learning journey.
+                </p>
+              </div>
               <div className="grid md:grid-cols-3 gap-8">
                 {[
                   {
                     icon: HiAcademicCap,
-                    title: "Personalized Learning",
-                    description: "AI-driven adaptive learning paths",
+                    title: "AI-Powered Learning",
+                    description:
+                      "Personalized learning paths that adapt to your progress and learning style in real-time.",
                   },
                   {
                     icon: HiLightningBolt,
                     title: "Interactive Content",
-                    description: "Engaging multimedia lessons",
+                    description:
+                      "Engage with dynamic content, real-time exercises, and hands-on projects.",
                   },
                   {
                     icon: HiTrendingUp,
-                    title: "Progress Tracking",
-                    description: "Real-time skill development insights",
+                    title: "Progress Analytics",
+                    description:
+                      "Track your growth with detailed insights and performance metrics.",
                   },
                 ].map((feature, index) => (
                   <motion.div
                     key={index}
-                    whileHover={{ scale: 1.05 }}
-                    className="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-lg"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className="bg-white dark:bg-gray-700 p-8 rounded-xl shadow-lg border border-gray-100 dark:border-gray-600 relative overflow-hidden group"
                   >
-                    <feature.icon className="mx-auto text-5xl text-purple-600 mb-4" />
-                    <h3 className="text-xl font-semibold mb-3 text-gray-900 dark:text-white">
-                      {feature.title}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-300">
-                      {feature.description}
-                    </p>
+                    <div className="absolute top-0 left-0 w-2 h-full bg-gradient-to-b from-purple-600 to-indigo-600 transform transition-transform duration-300 -translate-y-full group-hover:translate-y-0" />
+                    <div className="relative z-10">
+                      <feature.icon className="text-5xl text-purple-600 dark:text-purple-400 mb-6 transform transition-transform group-hover:scale-110 duration-300" />
+                      <h3 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
+                        {feature.title}
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-300">
+                        {feature.description}
+                      </p>
+                    </div>
                   </motion.div>
                 ))}
               </div>
             </div>
           </motion.section>
-
           {/* Technology Integration Section */}
           <motion.section
             id="technology"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            className="py-16 bg-white dark:bg-gray-900"
+            transition={{ duration: 0.6 }}
+            className="py-20 bg-gradient-to-br from-white to-purple-50 dark:from-gray-900 dark:to-purple-950"
           >
-            <div className="container mx-auto text-center">
-              <h2 className="text-4xl font-bold mb-12 text-gray-900 dark:text-white">
+            <div className="container mx-auto px-4 text-center">
+              <h2 className="text-4xl font-bold mb-12 bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-400 text-transparent bg-clip-text">
                 Cutting-Edge Technology Integration
               </h2>
               <div className="grid md:grid-cols-4 gap-6">
                 {[
-                  { icon: HiCode, title: "AI Learning" },
-                  { icon: HiGlobe, title: "Global Access" },
-                  { icon: HiUserGroup, title: "Community Learning" },
-                  { icon: HiShieldCheck, title: "Secure Platform" },
+                  {
+                    icon: HiCode,
+                    title: "AI Learning",
+                    description: "Advanced algorithms",
+                  },
+                  {
+                    icon: HiGlobe,
+                    title: "Global Access",
+                    description: "Learn anywhere",
+                  },
+                  {
+                    icon: HiUserGroup,
+                    title: "Community",
+                    description: "Learn together",
+                  },
+                  {
+                    icon: HiShieldCheck,
+                    title: "Security",
+                    description: "Enterprise-grade",
+                  },
                 ].map((tech, index) => (
                   <motion.div
                     key={index}
-                    whileHover={{ scale: 1.1 }}
-                    className="bg-gray-100 dark:bg-gray-800 p-6 rounded-xl"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-purple-100 dark:border-purple-900/20 hover:border-purple-500 dark:hover:border-purple-500 transition-all duration-300"
                   >
-                    <tech.icon className="mx-auto text-4xl text-blue-600 mb-4" />
-                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+                    <tech.icon className="mx-auto text-4xl text-purple-600 dark:text-purple-400 mb-4" />
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                       {tech.title}
                     </h3>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
+                      {tech.description}
+                    </p>
                   </motion.div>
                 ))}
               </div>
@@ -186,135 +269,191 @@ export default function Home() {
             id="pricing"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            className="bg-gray-50 dark:bg-gray-800 py-16"
+            className="bg-white dark:bg-gray-800 py-20"
           >
-            <div className="container mx-auto text-center">
-              <h2 className="text-4xl font-bold mb-12 text-gray-900 dark:text-white">
+            <div className="container mx-auto px-4 text-center">
+              <h2 className="text-4xl font-bold mb-12 bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-400 text-transparent bg-clip-text">
                 Flexible Pricing Plans
               </h2>
               <div className="grid md:grid-cols-3 gap-8">
                 {[
                   {
                     title: "Starter",
-                    price: "$9.99",
-                    features: ["Basic Courses", "Limited Access"],
+                    price: "Free",
+                    features: [
+                      "Basic AI-powered courses",
+                      "Community access",
+                      "Progress tracking",
+                      "Email support",
+                    ],
                   },
                   {
                     title: "Pro",
                     price: "$19.99",
-                    features: ["Full Access", "Advanced Features"],
+                    features: [
+                      "All Starter features",
+                      "Advanced AI features",
+                      "Priority support",
+                      "Custom learning paths",
+                    ],
+                    popular: true,
                   },
                   {
                     title: "Enterprise",
                     price: "Custom",
-                    features: ["Unlimited Access", "Priority Support"],
+                    features: [
+                      "All Pro features",
+                      "Custom solutions",
+                      "Dedicated support",
+                      "Team analytics",
+                    ],
                   },
                 ].map((plan, index) => (
                   <motion.div
                     key={index}
-                    whileHover={{ scale: 1.05 }}
-                    className="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-lg"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className={`relative bg-white dark:bg-gray-700 p-8 rounded-xl shadow-lg ${
+                      plan.popular
+                        ? "border-2 border-purple-500 dark:border-purple-400"
+                        : "border border-gray-100 dark:border-gray-600"
+                    }`}
                   >
+                    {plan.popular && (
+                      <Badge
+                        color="purple"
+                        className="absolute -top-3 right-4"
+                        size="lg"
+                      >
+                        Most Popular
+                      </Badge>
+                    )}
                     <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
                       {plan.title}
                     </h3>
-                    <p className="text-3xl font-extrabold mb-6 text-gray-900 dark:text-white">
+                    <p className="text-3xl font-extrabold mb-6 bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-400 text-transparent bg-clip-text">
                       {plan.price}
                     </p>
-                    <ul className="mb-6">
+                    <ul className="mb-8 space-y-4">
                       {plan.features.map((feature, idx) => (
                         <li
                           key={idx}
-                          className="mb-2 text-gray-600 dark:text-gray-300"
+                          className="flex items-center text-gray-600 dark:text-gray-300"
                         >
+                          <HiShieldCheck className="text-purple-600 dark:text-purple-400 mr-2" />
                           {feature}
                         </li>
                       ))}
                     </ul>
-                    <Button gradientDuoTone="purpleToPink">Choose Plan</Button>
+                    <Button
+                      gradientDuoTone="purpleToPink"
+                      className="w-full shadow-lg hover:shadow-purple-500/30 transition-all duration-300"
+                    >
+                      Get Started
+                    </Button>
                   </motion.div>
                 ))}
               </div>
             </div>
           </motion.section>
 
-          {/* About */}
+          {/* About Section */}
           <motion.section
             id="about"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-white dark:bg-gray-900 py-16"
+            className="bg-gradient-to-br from-white to-purple-50 dark:from-gray-900 dark:to-purple-950 py-20"
           >
-            <div className="container mx-auto text-center">
-              <h2 className="text-4xl font-bold mb-8 text-gray-900 dark:text-white">
+            <div className="container mx-auto px-4 text-center max-w-4xl">
+              <h2 className="text-4xl font-bold mb-8 bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-400 text-transparent bg-clip-text">
                 About Us
               </h2>
-              <p className="text-lg mb-6 text-gray-600 dark:text-gray-300">
+              <p className="text-lg mb-8 text-gray-600 dark:text-gray-300">
                 Learnify is dedicated to revolutionizing the way people learn
                 through the power of technology. Our mission is to provide
                 accessible, personalized, and impactful learning experiences to
                 everyone, anywhere in the world.
               </p>
               <div className="flex justify-center space-x-4">
-                <Button gradientDuoTone="tealToLime">Read More</Button>
-                <Button outline gradientDuoTone="tealToLime">
+                <Button
+                  gradientDuoTone="purpleToPink"
+                  size="lg"
+                  className="shadow-lg hover:shadow-purple-500/30 transition-all duration-300"
+                >
+                  Read More
+                </Button>
+                <Button
+                  outline
+                  gradientDuoTone="purpleToPink"
+                  size="lg"
+                  className="shadow-lg hover:shadow-purple-500/20 transition-all duration-300"
+                >
                   Contact Us
                 </Button>
               </div>
             </div>
           </motion.section>
 
-          {/* Testimonials section */}
+          {/* Testimonials Section */}
           <motion.section
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
-            className="bg-gray-50 dark:bg-gray-800 py-16"
+            className="bg-white dark:bg-gray-800 py-20"
           >
-            <div className="container mx-auto text-center">
-              <h2 className="text-4xl font-bold mb-12 text-gray-900 dark:text-white">
+            <div className="container mx-auto px-4 text-center">
+              <h2 className="text-4xl font-bold mb-12 bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-400 text-transparent bg-clip-text">
                 What Our Learners Say
               </h2>
               <div className="grid md:grid-cols-3 gap-8">
                 {[
                   {
                     name: "John Doe",
+                    role: "Software Developer",
                     feedback:
                       "Learnify transformed the way I approach learning. The personalized features are incredible!",
                     image: "/profile1.png",
                   },
                   {
                     name: "Jane Smith",
+                    role: "Data Scientist",
                     feedback:
                       "I love the interactive lessons! They make learning so much more engaging and fun.",
                     image: "/profile2.png",
                   },
                   {
                     name: "Alex Johnson",
+                    role: "UX Designer",
                     feedback:
                       "The community learning feature helped me connect with like-minded learners. Highly recommended!",
                     image: "/profile3.png",
                   },
                 ].map((testimonial, index) => (
-                  <div
+                  <motion.div
                     key={index}
-                    className="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-lg"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-lg border border-gray-100 dark:border-gray-600"
                   >
-                    <Image
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      width={80}
-                      height={80}
-                      className="mx-auto rounded-full mb-4"
-                    />
-                    <p className="italic text-gray-600 dark:text-gray-300">
-                      {'"' + testimonial.feedback + '"'}
+                    <div className="relative w-20 h-20 mx-auto mb-4">
+                      <Image
+                        src={testimonial.image}
+                        alt={testimonial.name}
+                        fill
+                        className="rounded-full object-cover"
+                      />
+                    </div>
+                    <p className="italic text-gray-600 dark:text-gray-300 mb-4">
+                      &quot;{testimonial.feedback}&quot;
                     </p>
-                    <h3 className="mt-4 font-semibold text-gray-900 dark:text-white">
+                    <h3 className="font-semibold text-gray-900 dark:text-white">
                       {testimonial.name}
                     </h3>
-                  </div>
+                    <p className="text-sm text-purple-600 dark:text-purple-400">
+                      {testimonial.role}
+                    </p>
+                  </motion.div>
                 ))}
               </div>
             </div>
@@ -325,22 +464,32 @@ export default function Home() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             transition={{ duration: 0.6 }}
-            className="bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-800 dark:to-indigo-800 py-16"
+            className="bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-800 dark:to-indigo-800 py-20"
           >
-            <div className="container mx-auto text-center text-white">
+            <div className="container mx-auto px-4 text-center text-white">
               <h2 className="text-4xl font-bold mb-6">
-                Ready to Transform Your Learning?
+                Start Your Learning Journey Today
               </h2>
-              <p className="text-lg mb-8">
-                Join thousands of learners on a journey to unlock their
-                potential with Learnify.
+              <p className="text-lg mb-8 opacity-90">
+                Join{" "}
+                {Math.floor(Math.random() * 50000 + 10000).toLocaleString()}+
+                learners who are already transforming their future with Learnify
               </p>
               <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <Button gradientDuoTone="purpleToPink" size="lg">
-                  Get Started
+                <Button
+                  gradientDuoTone="purpleToPink"
+                  size="lg"
+                  className="shadow-lg hover:shadow-purple-500/30 transition-all duration-300"
+                >
+                  Get Started Free
                 </Button>
-                <Button outline size="lg" gradientDuoTone="purpleToPink">
-                  Contact Sales
+                <Button
+                  outline
+                  gradientDuoTone="purpleToPink"
+                  size="lg"
+                  className="shadow-lg hover:shadow-purple-500/20 transition-all duration-300"
+                >
+                  Schedule Demo
                 </Button>
               </div>
             </div>
@@ -351,56 +500,75 @@ export default function Home() {
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="bg-gray-50 dark:bg-gray-800 py-16"
+            className="bg-gradient-to-br from-white to-purple-50 dark:from-gray-900 dark:to-purple-950 py-16"
           >
-            <div className="container mx-auto">
-              <h2 className="text-4xl font-bold mb-8 text-gray-900 dark:text-white text-center">
+            <div className="container mx-auto px-4">
+              <h2 className="text-4xl font-bold mb-8 text-center bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-400 text-transparent bg-clip-text">
                 Latest Articles
               </h2>
               <div className="grid md:grid-cols-3 gap-8">
                 {[
                   {
                     title: "10 Ways AI is Revolutionizing Learning",
-                    description: "Discover how AI is reshaping education.",
+                    description:
+                      "Discover how artificial intelligence is transforming education and creating personalized learning experiences.",
                     link: "/blog/ai-revolution",
                     image: "/ai.jpg",
+                    date: "January 10, 2025",
                   },
                   {
-                    title: "How to Create a Personalized Learning Plan",
+                    title: "Creating Your Perfect Learning Path",
                     description:
-                      "Learn tips and tricks for personalizing your study.",
+                      "Learn expert tips and strategies for customizing your educational journey for maximum impact.",
                     link: "/blog/personalized-learning",
                     image: "/learn.png",
+                    date: "January 9, 2025",
                   },
                   {
-                    title: "The Benefits of Community Learning",
+                    title: "The Power of Community Learning",
                     description:
-                      "Explore how learning in a community can boost your success.",
+                      "Explore how collaborative learning environments enhance knowledge retention and skill development.",
                     link: "/blog/community-learning",
                     image: "/community.jpg",
+                    date: "January 8, 2025",
                   },
                 ].map((article, index) => (
-                  <div
+                  <motion.div
                     key={index}
-                    className="bg-white dark:bg-gray-700 p-6 rounded-xl shadow-lg"
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className="bg-white dark:bg-gray-700 rounded-xl shadow-lg overflow-hidden border border-gray-100 dark:border-gray-600 group"
                   >
-                    <Image
-                      src={article.image}
-                      alt={article.title}
-                      width={500}
-                      height={200}
-                      className="rounded-xl mb-4"
-                    />
-                    <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
-                      {article.title}
-                    </h3>
-                    <p className="text-gray-600 dark:text-gray-300 mb-4">
-                      {article.description}
-                    </p>
-                    <Button href={article.link} gradientDuoTone="cyanToBlue">
-                      Read More
-                    </Button>
-                  </div>
+                    <div className="relative overflow-hidden">
+                      <Image
+                        src={article.image}
+                        alt={article.title}
+                        width={500}
+                        height={300}
+                        className="w-full h-48 object-cover transform transition-transform duration-300 group-hover:scale-110"
+                      />
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-4">
+                        <Badge color="purple" className="mb-2">
+                          {article.date}
+                        </Badge>
+                      </div>
+                    </div>
+                    <div className="p-6">
+                      <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors">
+                        {article.title}
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
+                        {article.description}
+                      </p>
+                      <Button
+                        href={article.link}
+                        gradientDuoTone="purpleToPink"
+                        className="w-full shadow-lg hover:shadow-purple-500/20 transition-all duration-300"
+                      >
+                        Read More
+                      </Button>
+                    </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
@@ -413,60 +581,148 @@ export default function Home() {
             transition={{ duration: 0.6 }}
             className="bg-white dark:bg-gray-900 py-16"
           >
-            <div className="container mx-auto">
-              <h2 className="text-4xl font-bold mb-8 text-gray-900 dark:text-white text-center">
+            <div className="container mx-auto px-4">
+              <h2 className="text-4xl font-bold mb-12 text-center bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-400 text-transparent bg-clip-text">
                 Frequently Asked Questions
               </h2>
-              <Accordion collapseAll>
-                {[
-                  {
-                    question: "What is Learnify?",
-                    answer:
-                      "Learnify is a personalized learning platform that leverages AI to create customized learning experiences.",
-                  },
-                  {
-                    question: "How does the pricing work?",
-                    answer:
-                      "We offer flexible plans tailored to your needs, from individual learners to enterprise solutions.",
-                  },
-                  {
-                    question: "Is there a free trial?",
-                    answer:
-                      "Yes! You can try Learnify for free with our Starter plan to explore our features.",
-                  },
-                ].map((faq, index) => (
-                  <Accordion.Panel key={index}>
-                    <Accordion.Title>{faq.question}</Accordion.Title>
-                    <Accordion.Content>
-                      <p className="text-gray-600 dark:text-gray-300">
-                        {faq.answer}
-                      </p>
-                    </Accordion.Content>
-                  </Accordion.Panel>
-                ))}
-              </Accordion>
+              <div className="max-w-3xl mx-auto">
+                <Accordion collapseAll>
+                  {[
+                    {
+                      question: "What makes Learnify different?",
+                      answer:
+                        "Learnify stands out with its AI-powered personalized learning paths, interactive content, and real-time adaptation to your learning style. Our platform ensures every learner gets a unique experience tailored to their needs.",
+                    },
+                    {
+                      question: "How does the pricing work?",
+                      answer:
+                        "We offer flexible plans tailored to your needs. Start with our free tier to explore the platform, upgrade to Pro for advanced features, or choose Enterprise for custom solutions. All plans include core learning features.",
+                    },
+                    {
+                      question: "Is there a free trial available?",
+                      answer:
+                        "Yes! You can start with our Starter plan completely free. This gives you access to basic courses, community features, and core platform functionality to help you evaluate if Learnify is right for you.",
+                    },
+                    {
+                      question: "How do I get started?",
+                      answer:
+                        "Getting started is easy! Simply click the 'Get Started Free' button, create your account, and you'll have immediate access to our platform. Our AI will guide you through creating your personalized learning path.",
+                    },
+                  ].map((faq, index) => (
+                    <Accordion.Panel key={index}>
+                      <Accordion.Title className="hover:text-purple-600 focus:text-purple-600">
+                        {faq.question}
+                      </Accordion.Title>
+                      <Accordion.Content>
+                        <p className="text-gray-600 dark:text-gray-300">
+                          {faq.answer}
+                        </p>
+                      </Accordion.Content>
+                    </Accordion.Panel>
+                  ))}
+                </Accordion>
+              </div>
             </div>
           </motion.section>
 
           {/* Footer */}
-          <Footer container className="bg-gray-100 dark:bg-gray-900">
-            <div className="w-full text-center">
-              <div className="mb-6">
-                <Footer.Brand
-                  href="/"
-                  name="Learnify"
-                  src="/logo.svg"
-                  alt="Learnify Logo"
-                />
+          <Footer
+            container
+            className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700"
+          >
+            <div className="container mx-auto px-4">
+              <div className="grid md:grid-cols-4 gap-8 py-8">
+                <div className="md:col-span-1">
+                  <Footer.Brand
+                    href="/"
+                    src="/logo.svg"
+                    alt="Learnify Logo"
+                    name="Learnify"
+                    className="text-purple-600 dark:text-purple-400"
+                  />
+                  <p className="mt-4 text-gray-600 dark:text-gray-400">
+                    Empowering learners worldwide with AI-driven education.
+                  </p>
+                  <p className="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                    Last updated: {formattedDate}
+                  </p>
+                </div>
+                <div className="md:col-span-3 grid grid-cols-2 md:grid-cols-3 gap-8">
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                      Platform
+                    </h3>
+                    <Footer.LinkGroup col>
+                      <Footer.Link
+                        href="#features"
+                        className="hover:text-purple-600"
+                      >
+                        Features
+                      </Footer.Link>
+                      <Footer.Link
+                        href="#pricing"
+                        className="hover:text-purple-600"
+                      >
+                        Pricing
+                      </Footer.Link>
+                      <Footer.Link
+                        href="#about"
+                        className="hover:text-purple-600"
+                      >
+                        About
+                      </Footer.Link>
+                      <Footer.Link
+                        href="/blog"
+                        className="hover:text-purple-600"
+                      >
+                        Blog
+                      </Footer.Link>
+                    </Footer.LinkGroup>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                      Resources
+                    </h3>
+                    <Footer.LinkGroup col>
+                      <Footer.Link href="#" className="hover:text-purple-600">
+                        Documentation
+                      </Footer.Link>
+                      <Footer.Link href="#" className="hover:text-purple-600">
+                        Help Center
+                      </Footer.Link>
+                      <Footer.Link href="#" className="hover:text-purple-600">
+                        Community
+                      </Footer.Link>
+                      <Footer.Link href="#" className="hover:text-purple-600">
+                        Tutorials
+                      </Footer.Link>
+                    </Footer.LinkGroup>
+                  </div>
+                  <div>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+                      Contact
+                    </h3>
+                    <Footer.LinkGroup col>
+                      <Footer.Link href="#" className="hover:text-purple-600">
+                        Support
+                      </Footer.Link>
+                      <Footer.Link href="#" className="hover:text-purple-600">
+                        Sales
+                      </Footer.Link>
+                      <Footer.Link href="#" className="hover:text-purple-600">
+                        Partners
+                      </Footer.Link>
+                      <Footer.Link href="#" className="hover:text-purple-600">
+                        Careers
+                      </Footer.Link>
+                    </Footer.LinkGroup>
+                  </div>
+                </div>
               </div>
-              <Footer.LinkGroup className="justify-center mb-6">
-                <Footer.Link href="#features">Features</Footer.Link>
-                <Footer.Link href="#pricing">Pricing</Footer.Link>
-                <Footer.Link href="#about">About</Footer.Link>
-                <Footer.Link href="#contact">Contact</Footer.Link>
-              </Footer.LinkGroup>
-              <div className="text-sm text-gray-500 dark:text-gray-400">
-                © {new Date().getFullYear()} Learnify. All Rights Reserved.
+              <div className="border-t border-gray-200 dark:border-gray-700 py-4">
+                <div className="text-sm text-center text-gray-500 dark:text-gray-400">
+                  © {new Date().getFullYear()} Learnify. All Rights Reserved.
+                </div>
               </div>
             </div>
           </Footer>
@@ -475,5 +731,15 @@ export default function Home() {
     );
   };
 
-  return <>{showSession()}</>;
+  // Updated return statement with current user info and date
+  return (
+    <>
+      <div className="hidden">
+        <div data-last-updated={currentDate.toISOString()}>
+          Last updated: {formattedDate}
+        </div>
+      </div>
+      {showSession()}
+    </>
+  );
 }

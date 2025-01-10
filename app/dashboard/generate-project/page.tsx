@@ -12,7 +12,7 @@ import {
 import { HiSearch } from 'react-icons/hi';
 
 const DIFFICULTIES = [
-  "Beginner",
+  "Beginner", 
   "Intermediate", 
   "Advanced"
 ];

@@ -25,7 +25,16 @@ import { redirect, useRouter } from "next/navigation";
 import { Line } from "react-chartjs-2";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { HiAcademicCap, HiChartBar, HiClipboardList } from "react-icons/hi";
+import { 
+  HiAcademicCap, 
+  HiChartBar, 
+  HiClipboardList,
+  HiCode,
+  HiLightningBolt,
+  HiTemplate,
+  HiChatAlt,
+  HiSparkles
+} from "react-icons/hi";
 
 ChartJS.register(
   CategoryScale,
@@ -40,6 +49,13 @@ ChartJS.register(
 export default function Dashboard() {
   const { status, data } = useSession();
   const router = useRouter();
+  const currentDate = new Date("2025-01-10T20:42:14Z");
+  const formattedDate = currentDate.toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
 
   const learningPointsData = {
     labels: ["Week 1", "Week 2", "Week 3", "Week 4"],
@@ -59,22 +75,49 @@ export default function Dashboard() {
     { 
       id: 1, 
       title: "Web Development", 
-      description: "Learn HTML, CSS, and JavaScript.",
-      icon: HiAcademicCap,
+      description: "Master modern web development with hands-on projects.",
+      icon: HiCode,
+      route: "/dashboard/take-course/web-development?desc=Complete%20web%20development%20from%20basics%20to%20advanced%20concepts"
     },
     { 
       id: 2, 
       title: "Data Science", 
-      description: "Master Python, Pandas, and Machine Learning.",
+      description: "Learn data analysis and machine learning fundamentals.",
       icon: HiChartBar,
+      route: "/dashboard/take-course/data-science?desc=Comprehensive%20data%20science%20and%20analytics%20course"
     },
     { 
       id: 3, 
-      title: "Mobile App Development", 
-      description: "Build apps using React Native.",
-      icon: HiClipboardList,
+      title: "Generate Custom Course", 
+      description: "Create your own personalized learning path.",
+      icon: HiLightningBolt,
+      route: "/dashboard/take-course"
     },
   ];
+
+  const projects = [
+    {
+      id: 1,
+      title: "E-Commerce Platform",
+      description: "Build a full-stack online store with payment integration.",
+      icon: HiTemplate,
+      route: "/dashboard/take-course/generate%20an%20e-commerce%20platform%20project%20with%20product%20listings%2C%20shopping%20cart%2C%20and%20payment%20integration"
+    },
+    {
+      id: 2,
+      title: "AI Chat Application",
+      description: "Develop a real-time chat app with AI capabilities.",
+      icon: HiChatAlt,
+      route: "/dashboard/take-course/generate%20an%20AI%20chat%20application%20with%20real-time%20messaging%20and%20AI-powered%20responses"
+    },
+    {
+      id: 3,
+      title: "Generate Custom Project",
+      description: "Create a project tailored to your interests.",
+      icon: HiSparkles,
+      route: "/dashboard/generate-project"
+    },
+];
 
   const pendingCourses = [
     "Advanced JavaScript",
@@ -114,8 +157,9 @@ export default function Dashboard() {
               animate={{ opacity: 1, y: 0 }}
               className="bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-800 dark:to-indigo-800 text-white p-8 rounded-2xl mb-8 shadow-lg"
             >
-              <h1 className="text-3xl font-bold mb-2">Hello, {data?.user?.name || "User"}!</h1>
-              <p className="text-lg opacity-90">Welcome back to your learning journey</p>
+              <h1 className="text-3xl font-bold mb-2">Hello, {data?.user?.name || "RohanVashisht1234"}!</h1>
+              <p className="text-lg opacity-90 mb-2">Welcome back to your learning journey</p>
+              <p className="text-sm opacity-75">{formattedDate}</p>
             </motion.div>
 
             <div className="grid md:grid-cols-3 gap-8">
@@ -181,8 +225,50 @@ export default function Dashboard() {
                       <p className="text-gray-600 dark:text-gray-400 mb-4">
                         {course.description}
                       </p>
-                      <Button gradientDuoTone="purpleToPink" className="w-full">
-                        Learn More
+                      <Button 
+                        gradientDuoTone="purpleToPink" 
+                        className="w-full"
+                        onClick={() => router.push(course.route)}
+                      >
+                        {course.id === 3 ? "Generate Course" : "Learn More"}
+                      </Button>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Projects Showcase */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-12"
+            >
+              <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white flex items-center gap-2">
+                <HiCode className="text-purple-600" />
+                Projects to Explore
+              </h2>
+              <div className="grid md:grid-cols-3 gap-6">
+                {projects.map((project) => (
+                  <motion.div
+                    key={project.id}
+                    whileHover={{ scale: 1.02 }}
+                    transition={{ type: "spring", stiffness: 300 }}
+                  >
+                    <Card className="shadow-lg dark:bg-gray-800 h-full">
+                      <project.icon className="text-4xl text-purple-600 mb-4" />
+                      <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">
+                        {project.title}
+                      </h3>
+                      <p className="text-gray-600 dark:text-gray-400 mb-4">
+                        {project.description}
+                      </p>
+                      <Button 
+                        gradientDuoTone="purpleToPink" 
+                        className="w-full"
+                        onClick={() => router.push(project.route)}
+                      >
+                        {project.id === 3 ? "Generate Project" : "Start Project"}
                       </Button>
                     </Card>
                   </motion.div>
