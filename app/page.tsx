@@ -88,6 +88,12 @@ export default function Home() {
               >
                 Login
               </NavbarLink>
+              <NavbarLink
+                href="/register"
+                className="hover:text-purple-600 dark:hover:text-purple-400"
+              >
+                Signup
+              </NavbarLink>
             </NavbarCollapse>
             <DarkThemeToggle />
           </Navbar>
