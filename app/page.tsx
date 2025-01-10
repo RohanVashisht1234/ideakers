@@ -28,6 +28,7 @@ import {
   HiGlobe,
   HiChip,
 } from "react-icons/hi";
+import Link from "next/link";
 
 export default function Home() {
   const { status } = useSession();
@@ -119,13 +120,15 @@ export default function Home() {
                   learners today.
                 </p>
                 <div className="flex justify-center md:justify-start space-x-4">
-                  <Button
-                    gradientDuoTone="purpleToPink"
-                    size="lg"
-                    className="shadow-lg hover:shadow-purple-500/30 transition-all duration-300"
-                  >
-                    Get Started Free
-                  </Button>
+                  <Link href="/login">
+                    <Button
+                      gradientDuoTone="purpleToPink"
+                      size="lg"
+                      className="shadow-lg hover:shadow-purple-500/30 transition-all duration-300"
+                    >
+                      Get Started Free
+                    </Button>
+                  </Link>
                   <Button
                     outline
                     gradientDuoTone="purpleToPink"
@@ -482,13 +485,15 @@ export default function Home() {
                 learners who are already transforming their future with Learnify
               </p>
               <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
-                <Button
-                  gradientDuoTone="purpleToPink"
-                  size="lg"
-                  className="shadow-lg hover:shadow-purple-500/30 transition-all duration-300"
-                >
-                  Get Started Free
-                </Button>
+                <Link href="/login">
+                  <Button
+                    gradientDuoTone="purpleToPink"
+                    size="lg"
+                    className="shadow-lg hover:shadow-purple-500/30 transition-all duration-300"
+                  >
+                    Get Started Free
+                  </Button>
+                </Link>
                 <Button
                   outline
                   gradientDuoTone="purpleToPink"
@@ -567,7 +572,7 @@ export default function Home() {
                         {article.description}
                       </p>
                       <Button
-                        href={article.link}
+                        href={"#"}
                         gradientDuoTone="purpleToPink"
                         className="w-full shadow-lg hover:shadow-purple-500/20 transition-all duration-300"
                       >

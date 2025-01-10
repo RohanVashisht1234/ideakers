@@ -101,14 +101,14 @@ export default function Dashboard() {
       title: "E-Commerce Platform",
       description: "Build a full-stack online store with payment integration.",
       icon: HiTemplate,
-      route: "/dashboard/take-course/generate%20an%20e-commerce%20platform%20project%20with%20product%20listings%2C%20shopping%20cart%2C%20and%20payment%20integration"
+      route: "/dashboard/take-project/generate%20an%20e-commerce%20platform%20project%20with%20product%20listings%2C%20shopping%20cart%2C%20and%20payment%20integration"
     },
     {
       id: 2,
       title: "AI Chat Application",
       description: "Develop a real-time chat app with AI capabilities.",
       icon: HiChatAlt,
-      route: "/dashboard/take-course/generate%20an%20AI%20chat%20application%20with%20real-time%20messaging%20and%20AI-powered%20responses"
+      route: "/dashboard/take-project/generate%20an%20AI%20chat%20application%20with%20real-time%20messaging%20and%20AI-powered%20responses"
     },
     {
       id: 3,
