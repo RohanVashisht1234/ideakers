@@ -29,6 +29,10 @@ const UserSchema = new Schema<UserDocument>({
   name: {
     type: String,
     required: [true, "Name is required"]
+  },
+  points: {
+    type: Number,
+    default: 0 // Default points value
   }
 },
 {

@@ -9,7 +9,11 @@ import {
   DarkThemeToggle,
   Flowbite 
 } from "flowbite-react";
-import { MdContentCopy, MdDownload } from "react-icons/md";
+
+interface CourseContent {
+  topics: string[];
+  explanations: string[];
+}
 
 export default function TakeCoursePage() {
   const params = useParams();
@@ -18,7 +22,8 @@ export default function TakeCoursePage() {
     : params.courseName;
 
   const [loading, setLoading] = useState(false);
-  const [generatedContent, setGeneratedContent] = useState<string | null>(null);
+  const [courseContent, setCourseContent] = useState<CourseContent | null>(null);
+  const [selectedTopicIndex, setSelectedTopicIndex] = useState<number>(0);
 
   useEffect(() => {
     if (courseName) {
@@ -33,7 +38,6 @@ export default function TakeCoursePage() {
     }
 
     setLoading(true);
-    setGeneratedContent(null);
 
     try {
       const response = await fetch("/api/generate-course", {
@@ -47,7 +51,9 @@ export default function TakeCoursePage() {
       if (!response.ok) throw new Error("Failed to generate course");
 
       const data = await response.json();
-      setGeneratedContent(data.generatedContent);
+      const parsedContent = parseGeneratedContent(data.generatedContent);
+      setCourseContent(parsedContent);
+      setSelectedTopicIndex(0);
     } catch (error) {
       console.error(error);
       alert("Failed to generate course content");
@@ -56,91 +62,87 @@ export default function TakeCoursePage() {
     }
   };
 
-  const handleCopyContent = () => {
-    if (generatedContent) {
-      navigator.clipboard.writeText(generatedContent);
-      alert("Course content copied to clipboard!");
-    }
-  };
+  const parseGeneratedContent = (content: string): CourseContent => {
+    // Split the content into sections
+    const sections = content.split('---').filter(section => section.trim() !== '');
+    
+    // First section contains topics
+    const topicsSection = sections[0];
+    
+    // Remaining sections are explanations
+    const explanationsSection = sections.slice(1);
 
-  const handleDownloadContent = () => {
-    if (generatedContent) {
-      const blob = new Blob([generatedContent], { type: 'text/plain' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = `${courseName.replace(/\s+/g, '_')}_course_outline.txt`;
-      link.click();
-    }
+    // Extract topics
+    const topics = topicsSection.trim().split('\n')
+      .map(topic => topic.replace(/^\d+\.\s*/, '').trim())
+      .filter(topic => topic !== '');
+
+    // Extract explanations
+    const explanations = explanationsSection
+      .map(exp => exp.replace(/^\d+\.\s*/, '').trim())
+      .filter(exp => exp !== '');
+
+    return { 
+      topics, 
+      explanations: explanations.slice(0, topics.length) // Ensure matching length
+    };
   };
 
   return (
     <Flowbite>
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex">
         <div className="absolute top-4 right-4">
           <DarkThemeToggle />
         </div>
         
-        <div className="container mx-auto px-4 py-12 max-w-4xl">
-          <Card className="mb-6 shadow-lg hover:shadow-2xl transition-shadow duration-300">
-            <div className="flex justify-between items-center">
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                Course: {courseName}
-              </h1>
+        <div className="container mx-auto px-4 py-12 max-w-6xl flex">
+          {loading ? (
+            <div className="flex-grow flex justify-center items-center">
+              <Spinner size="xl" color="info" />
+              <span className="ml-3 text-xl text-gray-600 dark:text-gray-300">
+                Generating Course Content...
+              </span>
             </div>
-
-            {loading ? (
-              <div className="flex justify-center items-center py-12">
-                <Spinner size="xl" color="info" />
-                <span className="ml-3 text-xl text-gray-600 dark:text-gray-300">
-                  Generating Course Content...
-                </span>
-              </div>
-            ) : (
-              <div className="text-center">
-                <Button 
-                  onClick={handleGenerateCourse}
-                  color="primary"
-                  className="mx-auto"
-                >
-                  Regenerate Course Content
-                </Button>
-              </div>
-            )}
-          </Card>
-
-          {generatedContent && (
-            <Card className="shadow-lg hover:shadow-2xl transition-shadow duration-300">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="text-2xl font-semibold text-gray-900 dark:text-white">
-                  Course Content
-                </h2>
-                <div className="flex space-x-2">
-                  <Button 
-                    size="sm" 
-                    color="light"
-                    onClick={handleCopyContent}
-                  >
-                    <MdContentCopy className="mr-2" /> Copy
-                  </Button>
-                  <Button 
-                    size="sm" 
-                    color="light"
-                    onClick={handleDownloadContent}
-                  >
-                    <MdDownload className="mr-2" /> Download
-                  </Button>
+          ) : courseContent ? (
+            <div className="flex w-full bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+              {/* Left Sidebar - Topics */}
+              <div className="w-1/3 bg-gray-100 dark:bg-gray-700 border-r dark:border-gray-600 overflow-y-auto">
+                <div className="p-4">
+                  <h2 className="text-xl font-bold mb-4 text-gray-900 dark:text-white">
+                    Course Topics
+                  </h2>
+                  {courseContent.topics.map((topic, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setSelectedTopicIndex(index)}
+                      className={`w-full text-left p-3 mb-2 rounded-lg transition-colors duration-200 ${
+                        selectedTopicIndex === index 
+                          ? 'bg-primary-500 text-white' 
+                          : 'hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300'
+                      }`}
+                    >
+                      {topic}
+                    </button>
+                  ))}
                 </div>
               </div>
-              <div 
-                className="whitespace-pre-wrap leading-relaxed 
-                           bg-gray-100 dark:bg-gray-800 
-                           p-4 rounded-lg 
-                           text-gray-800 dark:text-gray-200
-                           max-h-[600px] overflow-y-auto"
-              >
-                {generatedContent}
+
+              {/* Right Panel - Explanation */}
+              <div className="w-2/3 p-6 overflow-y-auto">
+                <h3 className="text-2xl font-bold mb-4 text-gray-900 dark:text-white">
+                  {courseContent.topics[selectedTopicIndex] || 'No Topic Selected'}
+                </h3>
+                <div className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                  {courseContent.explanations[selectedTopicIndex] || 'No explanation available'}
+                </div>
               </div>
-            </Card>
+            </div>
+          ) : (
+            <div className="flex-grow flex justify-center items-center">
+              <Button onClick={handleGenerateCourse} color="primary">
+                Generate Course Content
+              </Button>
+            </div>
           )}
         </div>
       </div>
