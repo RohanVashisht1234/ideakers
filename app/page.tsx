@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Navbar,
   NavbarBrand,
@@ -57,9 +58,9 @@ export default function Home() {
             </NavbarBrand>
             <NavbarToggle />
             <NavbarCollapse>
-              <NavbarLink href="/features">Features</NavbarLink>
-              <NavbarLink href="/pricing">Pricing</NavbarLink>
-              <NavbarLink href="/about">About</NavbarLink>
+              <NavbarLink href="#features">Features</NavbarLink>
+              <NavbarLink href="#pricing">Pricing</NavbarLink>
+              <NavbarLink href="#about">About</NavbarLink>
               <NavbarLink href="/login">Login</NavbarLink>
             </NavbarCollapse>
             <DarkThemeToggle />
@@ -90,7 +91,7 @@ export default function Home() {
             </div>
             <div>
               <Image
-                src="/hero-illustration.svg"
+                src="/hero-illustration.png"
                 alt="Learning Illustration"
                 width={500}
                 height={400}
@@ -101,6 +102,7 @@ export default function Home() {
 
           {/* Features Section */}
           <motion.section
+            id="features"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -148,6 +150,7 @@ export default function Home() {
 
           {/* Technology Integration Section */}
           <motion.section
+            id="technology"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             className="py-16 bg-white dark:bg-gray-900"
@@ -180,6 +183,7 @@ export default function Home() {
 
           {/* Pricing Section */}
           <motion.section
+            id="pricing"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             className="bg-gray-50 dark:bg-gray-800 py-16"
@@ -233,8 +237,10 @@ export default function Home() {
               </div>
             </div>
           </motion.section>
+
           {/* About */}
           <motion.section
+            id="about"
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
@@ -276,19 +282,19 @@ export default function Home() {
                     name: "John Doe",
                     feedback:
                       "Learnify transformed the way I approach learning. The personalized features are incredible!",
-                    image: "/testimonials/john.jpg",
+                    image: "/profile1.png",
                   },
                   {
                     name: "Jane Smith",
                     feedback:
                       "I love the interactive lessons! They make learning so much more engaging and fun.",
-                    image: "/testimonials/jane.jpg",
+                    image: "/profile2.png",
                   },
                   {
                     name: "Alex Johnson",
                     feedback:
                       "The community learning feature helped me connect with like-minded learners. Highly recommended!",
-                    image: "/testimonials/alex.jpg",
+                    image: "/profile3.png",
                   },
                 ].map((testimonial, index) => (
                   <div
@@ -305,7 +311,9 @@ export default function Home() {
                     <p className="italic text-gray-600 dark:text-gray-300">
                       {'"' + testimonial.feedback + '"'}
                     </p>
-                    <h3 className="mt-4 font-semibold">{testimonial.name}</h3>
+                    <h3 className="mt-4 font-semibold text-gray-900 dark:text-white">
+                      {testimonial.name}
+                    </h3>
                   </div>
                 ))}
               </div>
@@ -355,21 +363,21 @@ export default function Home() {
                     title: "10 Ways AI is Revolutionizing Learning",
                     description: "Discover how AI is reshaping education.",
                     link: "/blog/ai-revolution",
-                    image: "/blog/ai.jpg",
+                    image: "/ai.jpg",
                   },
                   {
                     title: "How to Create a Personalized Learning Plan",
                     description:
                       "Learn tips and tricks for personalizing your study.",
                     link: "/blog/personalized-learning",
-                    image: "/blog/personalized.jpg",
+                    image: "/learn.png",
                   },
                   {
                     title: "The Benefits of Community Learning",
                     description:
                       "Explore how learning in a community can boost your success.",
                     link: "/blog/community-learning",
-                    image: "/blog/community.jpg",
+                    image: "/community.jpg",
                   },
                 ].map((article, index) => (
                   <div
@@ -379,11 +387,11 @@ export default function Home() {
                     <Image
                       src={article.image}
                       alt={article.title}
-                      width={300}
+                      width={500}
                       height={200}
                       className="rounded-xl mb-4"
                     />
-                    <h3 className="text-xl font-semibold mb-2">
+                    <h3 className="text-xl font-semibold mb-2 text-gray-900 dark:text-white">
                       {article.title}
                     </h3>
                     <p className="text-gray-600 dark:text-gray-300 mb-4">
@@ -397,6 +405,7 @@ export default function Home() {
               </div>
             </div>
           </motion.section>
+
           {/* FAQ Section */}
           <motion.section
             initial={{ opacity: 0, y: 50 }}
@@ -451,10 +460,10 @@ export default function Home() {
                 />
               </div>
               <Footer.LinkGroup className="justify-center mb-6">
-                <Footer.Link href="/features">Features</Footer.Link>
-                <Footer.Link href="/pricing">Pricing</Footer.Link>
-                <Footer.Link href="/about">About</Footer.Link>
-                <Footer.Link href="/contact">Contact</Footer.Link>
+                <Footer.Link href="#features">Features</Footer.Link>
+                <Footer.Link href="#pricing">Pricing</Footer.Link>
+                <Footer.Link href="#about">About</Footer.Link>
+                <Footer.Link href="#contact">Contact</Footer.Link>
               </Footer.LinkGroup>
               <div className="text-sm text-gray-500 dark:text-gray-400">
                 © {new Date().getFullYear()} Learnify. All Rights Reserved.
