@@ -13,7 +13,10 @@ import {
   DarkThemeToggle,
   Flowbite,
   Badge,
+  Toast,
+  ToastToggle,
 } from "flowbite-react";
+import { MdLoop } from "react-icons/md";
 import { motion } from "framer-motion";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
@@ -129,14 +132,6 @@ export default function Home() {
                       Get Started Free
                     </Button>
                   </Link>
-                  <Button
-                    outline
-                    gradientDuoTone="purpleToPink"
-                    size="lg"
-                    className="shadow-lg hover:shadow-purple-500/20 transition-all duration-300"
-                  >
-                    View Courses
-                  </Button>
                 </div>
               </motion.div>
             </div>
@@ -737,6 +732,33 @@ export default function Home() {
               </div>
             </div>
           </Footer>
+        </div>
+        <div className="fixed bottom-5 right-5 z-50 animate-[slideIn_0.5s_ease-out]">
+          <Toast className="bg-white dark:bg-gray-800 shadow-lg border border-purple-100 dark:border-purple-800">
+            <div className="flex items-start">
+              <div className="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-purple-100 text-purple-500 dark:bg-purple-900 dark:text-purple-300">
+                <MdLoop className="h-5 w-5" />
+              </div>
+              <div className="ml-3 text-sm font-normal">
+                <span className="mb-1 text-sm font-semibold text-gray-900 dark:text-white">
+                  Please Login to use complete website
+                </span>
+                <div className="mb-2 text-sm font-normal">
+                  Logining in is important to use the complete website.
+                </div>
+                <div className="flex gap-2">
+                  <div className="w-auto">
+                    <Link href="/login">
+                      <Button size="xs" gradientDuoTone="purpleToPink">
+                        Login
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </div>
+              <ToastToggle />
+            </div>
+          </Toast>
         </div>
       </Flowbite>
     );
