@@ -142,6 +142,9 @@ export default function Dashboard() {
             <NavbarLink href="/dashboard" active={true} className="dark:text-white">
               Dashboard
             </NavbarLink>
+            <NavbarLink href="/dashboard/leaderboard" active={true} className="dark:text-white">
+              Leaderboard
+            </NavbarLink>
             <NavbarLink href="#" onClick={() => signOut()} className="dark:text-white">
               Sign Out
             </NavbarLink>
