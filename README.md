@@ -81,5 +81,3 @@ We aim to continuously improve and expand our product to provide the best learni
 Thank you for checking out Ideackers! We hope you find our product useful and engaging. If you have any questions or feedback, please feel free to reach out.
 
 ---
-
-This README file provides a clear and comprehensive overview of your project, covering the problem statement, solution, product features, and future plans. It aims to engage users and provide them with all the necessary information about Ideackers.
