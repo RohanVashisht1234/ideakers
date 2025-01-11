@@ -43,6 +43,21 @@ We are building a web-based game that helps users learn or upgrade a skill or to
 - Leaderboards display rankings and points after course completion.
 - Rewards such as swags, coupons, and opportunities to participate in competitions are given for high scores.
 
+### Product Features
+
+- Courses tailored to current and desired positions
+- Guild-based learning with individual sub-skills contributing to overall team exp
+- Points redeemable for brand offers and family trips
+- Exp redeemable for promotions
+- Organized events and hackathons for extra rewards
+- Strict rules against procrastination and unfair means
+
+## Future Plan
+
+---
+
+We aim to continuously improve and expand our product to provide the best learning experience for students and employees worldwide.
+
 ### For Corporate Employees
 
 #### Corporate Problems
@@ -60,21 +75,6 @@ We are building a web-based game that helps users learn or upgrade a skill or to
 - Teams can compete in events and hackathons for bigger prizes and goodies.
 - Unfair means while upskilling lead to point and exp deductions and potential negative badges.
 - Employees moving to other collaborating MNCs retain their previously achieved badges.
-
-### Product Features
-
-- Courses tailored to current and desired positions
-- Guild-based learning with individual sub-skills contributing to overall team exp
-- Points redeemable for brand offers and family trips
-- Exp redeemable for promotions
-- Organized events and hackathons for extra rewards
-- Strict rules against procrastination and unfair means
-
-## Future Plan
-
----
-
-We aim to continuously improve and expand our product to provide the best learning experience for students and employees worldwide.
 
 ## Installation
 
