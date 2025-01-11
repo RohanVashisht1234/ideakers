@@ -5,9 +5,10 @@ Welcome to Ideackers! This project was developed for the ISTD Hackathon to gamif
 ## Documentation
 
 ### Links
+
 Website demon - [https://ideakers.vercel.app](https://ideakers.vercel.app)
 
-Business model  - [Ideackers Business Model.xlsx](https://github.com/user-attachments/files/18384209/Ideackers.Business.Model.xlsx)
+Business model - [Ideackers Business Model.xlsx](https://github.com/user-attachments/files/18384209/Ideackers.Business.Model.xlsx)
 
 PPT - [By Ideakers (1).pdf](https://github.com/user-attachments/files/18384210/By.Ideakers.1.pdf)
 
