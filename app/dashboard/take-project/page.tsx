@@ -1,11 +1,11 @@
 "use client";
-import { useState } from 'react';
-import { 
-  Button, 
-  Card, 
-  Select, 
-  Label, 
-  Flowbite, 
+import { useState } from "react";
+import {
+  Button,
+  Card,
+  Select,
+  Label,
+  Flowbite,
   TextInput,
   Textarea,
   Navbar,
@@ -16,38 +16,34 @@ import {
   DarkThemeToggle,
 } from "flowbite-react";
 import { motion } from "framer-motion";
-import { 
-  HiSearch, 
-  HiCode, 
-  HiLightningBolt, 
+import {
+  HiSearch,
+  HiCode,
+  HiLightningBolt,
   HiTemplate,
   HiChip,
   HiCube,
-  HiDatabase
-} from 'react-icons/hi';
-import Link from 'next/link';
+  HiDatabase,
+} from "react-icons/hi";
+import Link from "next/link";
 
-const DIFFICULTIES = [
-  "Beginner",
-  "Intermediate", 
-  "Advanced"
-];
+const DIFFICULTIES = ["Beginner", "Intermediate", "Advanced"];
 
 export default function ProjectGeneratorPage() {
-  const [projectDescription, setProjectDescription] = useState('');
-  const [technology, setTechnology] = useState('');
-  const [projectDifficulty, setProjectDifficulty] = useState('Beginner');
-  const [additionalRequirements, setAdditionalRequirements] = useState('');
+  const [projectDescription, setProjectDescription] = useState("");
+  const [technology, setTechnology] = useState("");
+  const [projectDifficulty, setProjectDifficulty] = useState("Beginner");
+  const [additionalRequirements, setAdditionalRequirements] = useState("");
   const [generatedProjects, setGeneratedProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const currentDate = new Date("2025-01-10T21:19:40Z");
-  const formattedDate = currentDate.toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
+  const formattedDate = currentDate.toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
 
   const handleGenerateProjects = async () => {
@@ -60,17 +56,17 @@ export default function ProjectGeneratorPage() {
     setError(null);
 
     try {
-      const response = await fetch('/api/generate-project', {
-        method: 'POST',
+      const response = await fetch("/api/generate-project", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
           projectDescription,
           technology,
           difficulty: projectDifficulty,
-          additionalRequirements
-        })
+          additionalRequirements,
+        }),
       });
 
       const data = await response.json();
@@ -79,14 +75,16 @@ export default function ProjectGeneratorPage() {
         throw new Error(data.error);
       }
 
-      const projects = Array.isArray(data.projects) 
-        ? data.projects 
+      const projects = Array.isArray(data.projects)
+        ? data.projects
         : JSON.parse(data.projects);
 
       setGeneratedProjects(projects);
     } catch (error) {
       console.error("Project generation failed", error);
-      setError(error instanceof Error ? error.message : "Failed to generate projects");
+      setError(
+        error instanceof Error ? error.message : "Failed to generate projects",
+      );
       setGeneratedProjects([]);
     } finally {
       setLoading(false);
@@ -125,8 +123,12 @@ export default function ProjectGeneratorPage() {
             animate={{ opacity: 1, y: 0 }}
             className="bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-800 dark:to-indigo-800 text-white p-8 rounded-2xl mb-8 shadow-lg"
           >
-            <h1 className="text-3xl font-bold mb-2">Hello, RohanVashisht1234!</h1>
-            <p className="text-lg opacity-90 mb-2">Tell us about the project you want to build</p>
+            <h1 className="text-3xl font-bold mb-2">
+              Hello, RohanVashisht1234!
+            </h1>
+            <p className="text-lg opacity-90 mb-2">
+              Tell us about the project you want to build
+            </p>
             <p className="text-sm opacity-75">{formattedDate}</p>
           </motion.div>
 
@@ -147,7 +149,11 @@ export default function ProjectGeneratorPage() {
               <div className="grid md:grid-cols-1 gap-6">
                 {/* Project Description */}
                 <div>
-                  <Label htmlFor="projectDescription" value="Project Description" className="text-gray-700 dark:text-gray-300" />
+                  <Label
+                    htmlFor="projectDescription"
+                    value="Project Description"
+                    className="text-gray-700 dark:text-gray-300"
+                  />
                   <Textarea
                     id="projectDescription"
                     placeholder="Describe the project you want to build (e.g., 'A real-time chat application with video calling features and user authentication')"
@@ -160,7 +166,11 @@ export default function ProjectGeneratorPage() {
 
                 {/* Technology Stack */}
                 <div>
-                  <Label htmlFor="technology" value="Preferred Technology Stack" className="text-gray-700 dark:text-gray-300" />
+                  <Label
+                    htmlFor="technology"
+                    value="Preferred Technology Stack"
+                    className="text-gray-700 dark:text-gray-300"
+                  />
                   <TextInput
                     id="technology"
                     placeholder="e.g., React, Node.js, MongoDB, WebRTC"
@@ -173,22 +183,32 @@ export default function ProjectGeneratorPage() {
 
                 {/* Difficulty Selection */}
                 <div>
-                  <Label htmlFor="difficulty" value="Project Difficulty" className="text-gray-700 dark:text-gray-300" />
-                  <Select 
+                  <Label
+                    htmlFor="difficulty"
+                    value="Project Difficulty"
+                    className="text-gray-700 dark:text-gray-300"
+                  />
+                  <Select
                     id="difficulty"
                     value={projectDifficulty}
                     onChange={(e) => setProjectDifficulty(e.target.value)}
                     className="mt-2"
                   >
-                    {DIFFICULTIES.map(diff => (
-                      <option key={diff} value={diff}>{diff}</option>
+                    {DIFFICULTIES.map((diff) => (
+                      <option key={diff} value={diff}>
+                        {diff}
+                      </option>
                     ))}
                   </Select>
                 </div>
 
                 {/* Additional Requirements */}
                 <div>
-                  <Label htmlFor="requirements" value="Additional Requirements (Optional)" className="text-gray-700 dark:text-gray-300" />
+                  <Label
+                    htmlFor="requirements"
+                    value="Additional Requirements (Optional)"
+                    className="text-gray-700 dark:text-gray-300"
+                  />
                   <Textarea
                     id="requirements"
                     placeholder="Any specific features, constraints, or requirements for your project? (e.g., 'Must be mobile-responsive, include dark mode, and support multiple languages')"
@@ -213,13 +233,13 @@ export default function ProjectGeneratorPage() {
 
               {/* Generate Button */}
               <div className="mt-6 text-center">
-                <Button 
+                <Button
                   onClick={handleGenerateProjects}
                   disabled={loading}
                   gradientDuoTone="purpleToPink"
                   className="w-full md:w-auto"
                 >
-                  {loading ? 'Generating Project...' : 'Generate Project'}
+                  {loading ? "Generating Project..." : "Generate Project"}
                 </Button>
               </div>
             </Card>
@@ -253,7 +273,10 @@ export default function ProjectGeneratorPage() {
                       </h4>
                       <ul className="space-y-2">
                         {project.features?.map((feature: string, i: number) => (
-                          <li key={i} className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
+                          <li
+                            key={i}
+                            className="flex items-center gap-2 text-gray-600 dark:text-gray-400"
+                          >
                             <div className="w-2 h-2 rounded-full bg-purple-600"></div>
                             {feature}
                           </li>

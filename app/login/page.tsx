@@ -128,18 +128,25 @@ export default function Login() {
               href="/register"
               className="text-sm text-gray-500 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition duration-150"
             >
-              Don&apos;t have an account? <span className="font-semibold">Sign up</span>
+              Don&apos;t have an account?{" "}
+              <span className="font-semibold">Sign up</span>
             </Link>
           </div>
         </motion.form>
 
         <div className="mt-4 text-center text-sm text-gray-500 dark:text-gray-400">
           By signing in, you agree to our{" "}
-          <Link href="/terms" className="text-purple-600 dark:text-purple-400 hover:underline">
+          <Link
+            href="/terms"
+            className="text-purple-600 dark:text-purple-400 hover:underline"
+          >
             Terms of Service
           </Link>{" "}
           and{" "}
-          <Link href="/privacy" className="text-purple-600 dark:text-purple-400 hover:underline">
+          <Link
+            href="/privacy"
+            className="text-purple-600 dark:text-purple-400 hover:underline"
+          >
             Privacy Policy
           </Link>
         </div>

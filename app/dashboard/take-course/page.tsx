@@ -1,14 +1,14 @@
 // /dashboard/take-course/page.tsx
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { 
-  Button, 
-  Card, 
-  Select, 
-  Label, 
-  Flowbite, 
+import {
+  Button,
+  Card,
+  Select,
+  Label,
+  Flowbite,
   TextInput,
   Navbar,
   NavbarBrand,
@@ -17,47 +17,43 @@ import {
   NavbarToggle,
   DarkThemeToggle,
   Spinner,
-  Badge
+  Badge,
 } from "flowbite-react";
 import { motion } from "framer-motion";
-import { 
-  HiSearch, 
-  HiCode, 
-  HiLightningBolt, 
+import {
+  HiSearch,
+  HiCode,
+  HiLightningBolt,
   HiAcademicCap,
   HiChip,
   HiUser,
   HiClock,
-  HiLogout
-} from 'react-icons/hi';
-import Link from 'next/link';
+  HiLogout,
+} from "react-icons/hi";
+import Link from "next/link";
 import { signOut } from "next-auth/react";
 
-const DIFFICULTIES = [
-  "Beginner",
-  "Intermediate", 
-  "Advanced"
-];
+const DIFFICULTIES = ["Beginner", "Intermediate", "Advanced"];
 
 export default function TakeCoursePage() {
   const currentDate = new Date("2025-01-10T22:33:11Z");
   const currentUser = "RohanVashisht1234";
-  
+
   const { status, data: session } = useSession();
   const router = useRouter();
 
-  const [field, setField] = useState('');
-  const [language, setLanguage] = useState('');
-  const [projectDifficulty, setProjectDifficulty] = useState('Beginner');
+  const [field, setField] = useState("");
+  const [language, setLanguage] = useState("");
+  const [projectDifficulty, setProjectDifficulty] = useState("Beginner");
   const [generatedProjects, setGeneratedProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const formattedDate = currentDate.toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
+  const formattedDate = currentDate.toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
 
   // Authentication check
@@ -77,18 +73,18 @@ export default function TakeCoursePage() {
     setError(null);
 
     try {
-      const response = await fetch('/api/generate-project', {
-        method: 'POST',
+      const response = await fetch("/api/generate-project", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session?.user?.email}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.user?.email}`,
         },
         body: JSON.stringify({
           field,
           language,
           difficulty: projectDifficulty,
-          userEmail: session?.user?.email
-        })
+          userEmail: session?.user?.email,
+        }),
       });
 
       if (!response.ok) {
@@ -105,14 +101,16 @@ export default function TakeCoursePage() {
         throw new Error(data.error);
       }
 
-      const projects = Array.isArray(data.projects) 
-        ? data.projects 
+      const projects = Array.isArray(data.projects)
+        ? data.projects
         : JSON.parse(data.projects);
 
       setGeneratedProjects(projects);
     } catch (error) {
       console.error("Project generation failed", error);
-      setError(error instanceof Error ? error.message : "Failed to generate projects");
+      setError(
+        error instanceof Error ? error.message : "Failed to generate projects",
+      );
       setGeneratedProjects([]);
     } finally {
       setLoading(false);
@@ -154,16 +152,27 @@ export default function TakeCoursePage() {
           <NavbarLink href="/dashboard" className="dark:text-white">
             Dashboard
           </NavbarLink>
-          <NavbarLink href="/dashboard/generate-project" className="dark:text-white">
+          <NavbarLink
+            href="/dashboard/generate-project"
+            className="dark:text-white"
+          >
             Generate Project
           </NavbarLink>
         </NavbarCollapse>
         <div className="flex items-center gap-4">
-          <Badge color="purple" size="sm" className="hidden md:flex items-center gap-2">
+          <Badge
+            color="purple"
+            size="sm"
+            className="hidden md:flex items-center gap-2"
+          >
             <HiUser className="text-purple-600 dark:text-purple-400" />
             {session?.user?.email || currentUser}
           </Badge>
-          <Badge color="purple" size="sm" className="hidden md:flex items-center gap-2">
+          <Badge
+            color="purple"
+            size="sm"
+            className="hidden md:flex items-center gap-2"
+          >
             <HiClock className="text-purple-600 dark:text-purple-400" />
             {currentDate.toLocaleTimeString()}
           </Badge>
@@ -171,7 +180,7 @@ export default function TakeCoursePage() {
           <Button
             gradientDuoTone="purpleToPink"
             size="sm"
-            onClick={() => signOut({ callbackUrl: '/login' })}
+            onClick={() => signOut({ callbackUrl: "/login" })}
           >
             <HiLogout className="mr-2" />
             Sign Out
@@ -190,7 +199,9 @@ export default function TakeCoursePage() {
             <h1 className="text-3xl font-bold mb-2">
               Welcome, {session?.user?.name || currentUser}
             </h1>
-            <p className="text-lg opacity-90 mb-2">Ready to generate your perfect learning path?</p>
+            <p className="text-lg opacity-90 mb-2">
+              Ready to generate your perfect learning path?
+            </p>
             <p className="text-sm opacity-75">{formattedDate}</p>
           </motion.div>
 
@@ -211,7 +222,11 @@ export default function TakeCoursePage() {
               <div className="grid md:grid-cols-3 gap-6">
                 {/* Field Input */}
                 <div>
-                  <Label htmlFor="field" value="Learning Field" className="text-gray-700 dark:text-gray-300" />
+                  <Label
+                    htmlFor="field"
+                    value="Learning Field"
+                    className="text-gray-700 dark:text-gray-300"
+                  />
                   <TextInput
                     id="field"
                     placeholder="e.g., Web Development"
@@ -224,7 +239,11 @@ export default function TakeCoursePage() {
 
                 {/* Language Input */}
                 <div>
-                  <Label htmlFor="language" value="Language/Framework" className="text-gray-700 dark:text-gray-300" />
+                  <Label
+                    htmlFor="language"
+                    value="Language/Framework"
+                    className="text-gray-700 dark:text-gray-300"
+                  />
                   <TextInput
                     id="language"
                     placeholder="e.g., React, Python"
@@ -237,15 +256,21 @@ export default function TakeCoursePage() {
 
                 {/* Difficulty Selection */}
                 <div>
-                  <Label htmlFor="difficulty" value="Project Difficulty" className="text-gray-700 dark:text-gray-300" />
-                  <Select 
+                  <Label
+                    htmlFor="difficulty"
+                    value="Project Difficulty"
+                    className="text-gray-700 dark:text-gray-300"
+                  />
+                  <Select
                     id="difficulty"
                     value={projectDifficulty}
                     onChange={(e) => setProjectDifficulty(e.target.value)}
                     className="mt-2"
                   >
-                    {DIFFICULTIES.map(diff => (
-                      <option key={diff} value={diff}>{diff}</option>
+                    {DIFFICULTIES.map((diff) => (
+                      <option key={diff} value={diff}>
+                        {diff}
+                      </option>
                     ))}
                   </Select>
                 </div>
@@ -264,7 +289,7 @@ export default function TakeCoursePage() {
 
               {/* Generate Button */}
               <div className="mt-6 text-center">
-                <Button 
+                <Button
                   onClick={handleGenerateProjects}
                   disabled={loading}
                   gradientDuoTone="purpleToPink"
@@ -316,15 +341,22 @@ export default function TakeCoursePage() {
                         Learning Objectives:
                       </h4>
                       <ul className="space-y-2">
-                        {project.learningObjectives?.map((obj: string, i: number) => (
-                          <li key={i} className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-                            <div className="w-2 h-2 rounded-full bg-purple-600 dark:bg-purple-400"></div>
-                            {obj}
-                          </li>
-                        ))}
+                        {project.learningObjectives?.map(
+                          (obj: string, i: number) => (
+                            <li
+                              key={i}
+                              className="flex items-center gap-2 text-gray-600 dark:text-gray-400"
+                            >
+                              <div className="w-2 h-2 rounded-full bg-purple-600 dark:bg-purple-400"></div>
+                              {obj}
+                            </li>
+                          ),
+                        )}
                       </ul>
                     </div>
-                    <Link href={`/dashboard/take-course/${encodeURIComponent(project.name)}`}>
+                    <Link
+                      href={`/dashboard/take-course/${encodeURIComponent(project.name)}`}
+                    >
                       <Button
                         gradientDuoTone="purpleToPink"
                         className="w-full shadow-lg hover:shadow-purple-500/30 transition-all duration-300"
@@ -358,7 +390,7 @@ export default function TakeCoursePage() {
                   </p>
                 </div>
               </Card>
-              
+
               <Card className="text-center">
                 <div className="flex flex-col items-center">
                   <HiCode className="text-3xl text-purple-600 dark:text-purple-400 mb-2" />
@@ -392,10 +424,13 @@ export default function TakeCoursePage() {
             transition={{ delay: 0.5 }}
             className="mt-8 text-center text-sm text-gray-500 dark:text-gray-400"
           >
-            <p>Course generation powered by AI • Last updated: {currentDate.toLocaleString()}</p>
+            <p>
+              Course generation powered by AI • Last updated:{" "}
+              {currentDate.toLocaleString()}
+            </p>
             <p className="mt-2">
-              Logged in as: {session?.user?.email || currentUser} • 
-              Session ID: {Math.random().toString(36).substr(2, 9)}
+              Logged in as: {session?.user?.email || currentUser} • Session ID:{" "}
+              {Math.random().toString(36).substr(2, 9)}
             </p>
           </motion.div>
         </div>

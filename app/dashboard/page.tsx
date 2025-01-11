@@ -25,15 +25,15 @@ import { redirect, useRouter } from "next/navigation";
 import { Line } from "react-chartjs-2";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { 
-  HiAcademicCap, 
-  HiChartBar, 
+import {
+  HiAcademicCap,
+  HiChartBar,
   HiClipboardList,
   HiCode,
   HiLightningBolt,
   HiTemplate,
   HiChatAlt,
-  HiSparkles
+  HiSparkles,
 } from "react-icons/hi";
 
 ChartJS.register(
@@ -43,18 +43,18 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 export default function Dashboard() {
   const { status, data } = useSession();
   const router = useRouter();
   const currentDate = new Date("2025-01-10T20:42:14Z");
-  const formattedDate = currentDate.toLocaleDateString('en-US', {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
+  const formattedDate = currentDate.toLocaleDateString("en-US", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
   });
 
   const learningPointsData = {
@@ -72,26 +72,28 @@ export default function Dashboard() {
   };
 
   const courses = [
-    { 
-      id: 1, 
-      title: "Web Development", 
+    {
+      id: 1,
+      title: "Web Development",
       description: "Master modern web development with hands-on projects.",
       icon: HiCode,
-      route: "/dashboard/take-course/web-development?desc=Complete%20web%20development%20from%20basics%20to%20advanced%20concepts"
+      route:
+        "/dashboard/take-course/web-development?desc=Complete%20web%20development%20from%20basics%20to%20advanced%20concepts",
     },
-    { 
-      id: 2, 
-      title: "Data Science", 
+    {
+      id: 2,
+      title: "Data Science",
       description: "Learn data analysis and machine learning fundamentals.",
       icon: HiChartBar,
-      route: "/dashboard/take-course/data-science?desc=Comprehensive%20data%20science%20and%20analytics%20course"
+      route:
+        "/dashboard/take-course/data-science?desc=Comprehensive%20data%20science%20and%20analytics%20course",
     },
-    { 
-      id: 3, 
-      title: "Generate Custom Course", 
+    {
+      id: 3,
+      title: "Generate Custom Course",
       description: "Create your own personalized learning path.",
       icon: HiLightningBolt,
-      route: "/dashboard/take-course"
+      route: "/dashboard/take-course",
     },
   ];
 
@@ -101,23 +103,25 @@ export default function Dashboard() {
       title: "E-Commerce Platform",
       description: "Build a full-stack online store with payment integration.",
       icon: HiTemplate,
-      route: "/dashboard/take-project/generate%20an%20e-commerce%20platform%20project%20with%20product%20listings%2C%20shopping%20cart%2C%20and%20payment%20integration"
+      route:
+        "/dashboard/take-project/generate%20an%20e-commerce%20platform%20project%20with%20product%20listings%2C%20shopping%20cart%2C%20and%20payment%20integration",
     },
     {
       id: 2,
       title: "AI Chat Application",
       description: "Develop a real-time chat app with AI capabilities.",
       icon: HiChatAlt,
-      route: "/dashboard/take-project/generate%20an%20AI%20chat%20application%20with%20real-time%20messaging%20and%20AI-powered%20responses"
+      route:
+        "/dashboard/take-project/generate%20an%20AI%20chat%20application%20with%20real-time%20messaging%20and%20AI-powered%20responses",
     },
     {
       id: 3,
       title: "Generate Custom Project",
       description: "Create a project tailored to your interests.",
       icon: HiSparkles,
-      route: "/dashboard/generate-project"
+      route: "/dashboard/generate-project",
     },
-];
+  ];
 
   const pendingCourses = [
     "Advanced JavaScript",
@@ -139,13 +143,25 @@ export default function Dashboard() {
           </NavbarBrand>
           <NavbarToggle />
           <NavbarCollapse>
-            <NavbarLink href="/dashboard" active={true} className="dark:text-white">
+            <NavbarLink
+              href="/dashboard"
+              active={true}
+              className="dark:text-white"
+            >
               Dashboard
             </NavbarLink>
-            <NavbarLink href="/dashboard/leaderboard" active={true} className="dark:text-white">
+            <NavbarLink
+              href="/dashboard/leaderboard"
+              active={true}
+              className="dark:text-white"
+            >
               Leaderboard
             </NavbarLink>
-            <NavbarLink href="#" onClick={() => signOut()} className="dark:text-white">
+            <NavbarLink
+              href="#"
+              onClick={() => signOut()}
+              className="dark:text-white"
+            >
               Sign Out
             </NavbarLink>
           </NavbarCollapse>
@@ -160,8 +176,12 @@ export default function Dashboard() {
               animate={{ opacity: 1, y: 0 }}
               className="bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-800 dark:to-indigo-800 text-white p-8 rounded-2xl mb-8 shadow-lg"
             >
-              <h1 className="text-3xl font-bold mb-2">Hello, {data?.user?.name || "RohanVashisht1234"}!</h1>
-              <p className="text-lg opacity-90 mb-2">Welcome back to your learning journey</p>
+              <h1 className="text-3xl font-bold mb-2">
+                Hello, {data?.user?.name || "RohanVashisht1234"}!
+              </h1>
+              <p className="text-lg opacity-90 mb-2">
+                Welcome back to your learning journey
+              </p>
               <p className="text-sm opacity-75">{formattedDate}</p>
             </motion.div>
 
@@ -193,7 +213,10 @@ export default function Dashboard() {
                   </h2>
                   <ul className="space-y-3">
                     {pendingCourses.map((course, index) => (
-                      <li key={index} className="flex items-center gap-2 text-gray-700 dark:text-gray-300">
+                      <li
+                        key={index}
+                        className="flex items-center gap-2 text-gray-700 dark:text-gray-300"
+                      >
                         <div className="w-2 h-2 rounded-full bg-purple-600"></div>
                         {course}
                       </li>
@@ -228,8 +251,8 @@ export default function Dashboard() {
                       <p className="text-gray-600 dark:text-gray-400 mb-4">
                         {course.description}
                       </p>
-                      <Button 
-                        gradientDuoTone="purpleToPink" 
+                      <Button
+                        gradientDuoTone="purpleToPink"
                         className="w-full"
                         onClick={() => router.push(course.route)}
                       >
@@ -266,12 +289,14 @@ export default function Dashboard() {
                       <p className="text-gray-600 dark:text-gray-400 mb-4">
                         {project.description}
                       </p>
-                      <Button 
-                        gradientDuoTone="purpleToPink" 
+                      <Button
+                        gradientDuoTone="purpleToPink"
                         className="w-full"
                         onClick={() => router.push(project.route)}
                       >
-                        {project.id === 3 ? "Generate Project" : "Start Project"}
+                        {project.id === 3
+                          ? "Generate Project"
+                          : "Start Project"}
                       </Button>
                     </Card>
                   </motion.div>
@@ -283,7 +308,11 @@ export default function Dashboard() {
       </Flowbite>
     );
   } else if (status === "loading") {
-    return <span className="text-purple-600 text-sm mt-7 dark:text-purple-400">Loading...</span>;
+    return (
+      <span className="text-purple-600 text-sm mt-7 dark:text-purple-400">
+        Loading...
+      </span>
+    );
   } else {
     return redirect("/");
   }

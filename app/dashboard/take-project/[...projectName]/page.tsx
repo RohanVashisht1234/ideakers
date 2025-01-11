@@ -1,18 +1,25 @@
 // app/dashboard/take-project/[...courseName]/page.tsx
 "use client";
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useSession } from "next-auth/react";
-import { 
-  Button, 
-  Card, 
-  Spinner, 
+import {
+  Button,
+  Card,
+  Spinner,
   DarkThemeToggle,
   Flowbite,
-  Badge
+  Badge,
 } from "flowbite-react";
-import { HiChip, HiBookOpen, HiLightningBolt, HiAcademicCap, HiClock, HiUser } from "react-icons/hi";
+import {
+  HiChip,
+  HiBookOpen,
+  HiLightningBolt,
+  HiAcademicCap,
+  HiClock,
+  HiUser,
+} from "react-icons/hi";
 
 interface CourseContent {
   topics: string[];
@@ -21,17 +28,19 @@ interface CourseContent {
 
 export default function TakeCoursePage() {
   const currentDate = new Date("2025-01-10T22:20:34Z");
-  
+
   const { status, data: session } = useSession();
   const router = useRouter();
   const params = useParams();
-  
-  const projectName = Array.isArray(params.projectName) 
-    ? params.projectName.join(' ') 
+
+  const projectName = Array.isArray(params.projectName)
+    ? params.projectName.join(" ")
     : params.projectName;
 
   const [loading, setLoading] = useState(false);
-  const [courseContent, setCourseContent] = useState<CourseContent | null>(null);
+  const [courseContent, setCourseContent] = useState<CourseContent | null>(
+    null,
+  );
   const [selectedTopicIndex, setSelectedTopicIndex] = useState<number>(0);
 
   // Authentication check
@@ -60,11 +69,11 @@ export default function TakeCoursePage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${session?.user?.email}` // Add authentication header
+          Authorization: `Bearer ${session?.user?.email}`, // Add authentication header
         },
-        body: JSON.stringify({ 
+        body: JSON.stringify({
           courseName: projectName,
-          userEmail: session?.user?.email // Include user email for tracking
+          userEmail: session?.user?.email, // Include user email for tracking
         }),
       });
 
@@ -89,21 +98,25 @@ export default function TakeCoursePage() {
   };
 
   const parseGeneratedContent = (content: string): CourseContent => {
-    const sections = content.split('---').filter(section => section.trim() !== '');
+    const sections = content
+      .split("---")
+      .filter((section) => section.trim() !== "");
     const topicsSection = sections[0];
     const explanationsSection = sections.slice(1);
 
-    const topics = topicsSection.trim().split('\n')
-      .map(topic => topic.replace(/^\d+\.\s*/, '').trim())
-      .filter(topic => topic !== '');
+    const topics = topicsSection
+      .trim()
+      .split("\n")
+      .map((topic) => topic.replace(/^\d+\.\s*/, "").trim())
+      .filter((topic) => topic !== "");
 
     const explanations = explanationsSection
-      .map(exp => exp.replace(/^\d+\.\s*/, '').trim())
-      .filter(exp => exp !== '');
+      .map((exp) => exp.replace(/^\d+\.\s*/, "").trim())
+      .filter((exp) => exp !== "");
 
-    return { 
-      topics, 
-      explanations: explanations.slice(0, topics.length)
+    return {
+      topics,
+      explanations: explanations.slice(0, topics.length),
     };
   };
 
@@ -144,7 +157,7 @@ export default function TakeCoursePage() {
           </div>
           <DarkThemeToggle />
         </div>
-        
+
         <div className="container mx-auto px-4 py-12 max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -196,14 +209,19 @@ export default function TakeCoursePage() {
                         whileTap={{ scale: 0.98 }}
                         onClick={() => setSelectedTopicIndex(index)}
                         className={`w-full text-left p-4 rounded-lg transition-all duration-200 flex items-center gap-3
-                          ${selectedTopicIndex === index 
-                            ? 'bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg' 
-                            : 'hover:bg-purple-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
+                          ${
+                            selectedTopicIndex === index
+                              ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg"
+                              : "hover:bg-purple-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300"
                           }`}
                       >
-                        <HiLightningBolt className={`${
-                          selectedTopicIndex === index ? 'text-white' : 'text-purple-600 dark:text-purple-400'
-                        }`} />
+                        <HiLightningBolt
+                          className={`${
+                            selectedTopicIndex === index
+                              ? "text-white"
+                              : "text-purple-600 dark:text-purple-400"
+                          }`}
+                        />
                         {topic}
                       </motion.button>
                     ))}
@@ -221,10 +239,12 @@ export default function TakeCoursePage() {
                 >
                   <h3 className="text-2xl font-bold mb-6 bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-400 text-transparent bg-clip-text flex items-center gap-3">
                     <HiLightningBolt className="text-purple-600 dark:text-purple-400" />
-                    {courseContent.topics[selectedTopicIndex] || 'No Topic Selected'}
+                    {courseContent.topics[selectedTopicIndex] ||
+                      "No Topic Selected"}
                   </h3>
                   <div className="prose prose-purple dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 leading-relaxed">
-                    {courseContent.explanations[selectedTopicIndex] || 'No explanation available'}
+                    {courseContent.explanations[selectedTopicIndex] ||
+                      "No explanation available"}
                   </div>
                 </motion.div>
               </div>
@@ -253,7 +273,8 @@ export default function TakeCoursePage() {
             transition={{ delay: 0.5 }}
             className="mt-4 text-center text-sm text-gray-500 dark:text-gray-400"
           >
-            Course generation powered by AI • Last updated: {currentDate.toLocaleString()}
+            Course generation powered by AI • Last updated:{" "}
+            {currentDate.toLocaleString()}
           </motion.div>
         </div>
       </div>

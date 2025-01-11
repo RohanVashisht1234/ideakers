@@ -12,41 +12,42 @@ export interface UserDocument {
   points: number; // Added points field
 }
 
-const UserSchema = new Schema<UserDocument>({
-  email: {
-    type: String,
-    unique: true,
-    required: [true, "Email is required"],
-    match: [
-      /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/,
-      "Email is invalid",
-    ],
+const UserSchema = new Schema<UserDocument>(
+  {
+    email: {
+      type: String,
+      unique: true,
+      required: [true, "Email is required"],
+      match: [
+        /^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/,
+        "Email is invalid",
+      ],
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    name: {
+      type: String,
+      required: [true, "Name is required"],
+    },
+    phone: {
+      type: String,
+      required: false, // Optional field
+    },
+    image: {
+      type: String,
+      required: false, // Optional field
+    },
+    points: {
+      type: Number,
+      default: 0, // Default points value
+    },
   },
-  password: {
-    type: String,
-    required: true
+  {
+    timestamps: true,
   },
-  name: {
-    type: String,
-    required: [true, "Name is required"]
-  },
-  phone: {
-    type: String,
-    required: false // Optional field
-  },
-  image: {
-    type: String,
-    required: false // Optional field
-  },
-  points: {
-    type: Number,
-    default: 0 // Default points value
-  }
-},
-{
-  timestamps: true,
-}
 );
 
-const User = mongoose.models?.User || model<UserDocument>('User', UserSchema);
+const User = mongoose.models?.User || model<UserDocument>("User", UserSchema);
 export default User;

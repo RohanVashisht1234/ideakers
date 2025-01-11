@@ -113,7 +113,7 @@ export default function LeaderboardPage() {
         const dummyData = createDummyUsers(session.user);
 
         const sortedUsers = [...dummyData].sort((a, b) =>
-          sortOrder === "desc" ? b.points - a.points : a.points - b.points
+          sortOrder === "desc" ? b.points - a.points : a.points - b.points,
         );
 
         setUsers(sortedUsers);
@@ -131,51 +131,70 @@ export default function LeaderboardPage() {
   return (
     <Flowbite>
       <Navbar
-  fluid
-  className="sticky top-0 z-50 bg-white dark:bg-gray-900 backdrop-blur-md border-b border-gray-200 dark:border-gray-700"
->
-  <NavbarBrand href="/dashboard">
-    <HiChip className="text-2xl text-purple-600 dark:text-purple-400 mr-2" />
-    <span className="self-center text-xl font-semibold text-purple-600 dark:text-purple-400">
-      Leaderboard
-    </span>
-  </NavbarBrand>
-  <NavbarToggle />
-  <NavbarCollapse>
-    <NavbarLink href="/dashboard" className="dark:text-white">
-      Dashboard
-    </NavbarLink>
-    <NavbarLink href="/dashboard/generate-project" className="dark:text-white">
-      Generate Project
-    </NavbarLink>
-    <NavbarLink href="/dashboard/leaderboard" active={true} className="dark:text-white">
-      Leaderboard
-    </NavbarLink>
-  </NavbarCollapse>
-  <div className="flex items-center gap-4">
-    <Badge color="purple" size="sm" className="hidden md:flex items-center gap-2">
-      <HiUser className="text-purple-600 dark:text-purple-400" />
-      {session?.user?.name || "RohanVashisht1234"}
-    </Badge>
-    <Badge color="indigo" size="sm" className="hidden md:flex items-center gap-2">
-      <HiAcademicCap className="text-purple-600 dark:text-purple-400" />
-      Rank #2 🥈
-    </Badge>
-    <Badge color="purple" size="sm" className="hidden md:flex items-center gap-2">
-      <HiClock className="text-purple-600 dark:text-purple-400" />
-      {new Date("2025-01-11T00:28:08Z").toLocaleTimeString()}
-    </Badge>
-    <DarkThemeToggle />
-    <Button
-      gradientDuoTone="purpleToPink"
-      size="sm"
-      onClick={() => signOut({ callbackUrl: '/login' })}
-    >
-      <HiLogout className="mr-2" />
-      Sign Out
-    </Button>
-  </div>
-</Navbar>
+        fluid
+        className="sticky top-0 z-50 bg-white dark:bg-gray-900 backdrop-blur-md border-b border-gray-200 dark:border-gray-700"
+      >
+        <NavbarBrand href="/dashboard">
+          <HiChip className="text-2xl text-purple-600 dark:text-purple-400 mr-2" />
+          <span className="self-center text-xl font-semibold text-purple-600 dark:text-purple-400">
+            Leaderboard
+          </span>
+        </NavbarBrand>
+        <NavbarToggle />
+        <NavbarCollapse>
+          <NavbarLink href="/dashboard" className="dark:text-white">
+            Dashboard
+          </NavbarLink>
+          <NavbarLink
+            href="/dashboard/generate-project"
+            className="dark:text-white"
+          >
+            Generate Project
+          </NavbarLink>
+          <NavbarLink
+            href="/dashboard/leaderboard"
+            active={true}
+            className="dark:text-white"
+          >
+            Leaderboard
+          </NavbarLink>
+        </NavbarCollapse>
+        <div className="flex items-center gap-4">
+          <Badge
+            color="purple"
+            size="sm"
+            className="hidden md:flex items-center gap-2"
+          >
+            <HiUser className="text-purple-600 dark:text-purple-400" />
+            {session?.user?.name || "RohanVashisht1234"}
+          </Badge>
+          <Badge
+            color="indigo"
+            size="sm"
+            className="hidden md:flex items-center gap-2"
+          >
+            <HiAcademicCap className="text-purple-600 dark:text-purple-400" />
+            Rank #2 🥈
+          </Badge>
+          <Badge
+            color="purple"
+            size="sm"
+            className="hidden md:flex items-center gap-2"
+          >
+            <HiClock className="text-purple-600 dark:text-purple-400" />
+            {new Date("2025-01-11T00:28:08Z").toLocaleTimeString()}
+          </Badge>
+          <DarkThemeToggle />
+          <Button
+            gradientDuoTone="purpleToPink"
+            size="sm"
+            onClick={() => signOut({ callbackUrl: "/login" })}
+          >
+            <HiLogout className="mr-2" />
+            Sign Out
+          </Button>
+        </div>
+      </Navbar>
 
       <div className="min-h-screen bg-gradient-to-br from-white to-purple-50 dark:from-gray-900 dark:to-purple-950">
         <div className="container mx-auto px-4 py-12 max-w-6xl">
@@ -258,7 +277,7 @@ export default function LeaderboardPage() {
                             img={
                               user.image ||
                               `https://ui-avatars.com/api/?name=${encodeURIComponent(
-                                user.name
+                                user.name,
                               )}`
                             }
                             rounded

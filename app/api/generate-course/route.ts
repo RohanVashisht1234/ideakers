@@ -1,5 +1,5 @@
 // app/api/generate-course/route.ts
-import { NextRequest, NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export async function POST(request: NextRequest) {
@@ -7,7 +7,10 @@ export async function POST(request: NextRequest) {
     const { courseName } = await request.json();
 
     if (!courseName) {
-      return NextResponse.json({ error: "Course name is required" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Course name is required" },
+        { status: 400 },
+      );
     }
 
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");

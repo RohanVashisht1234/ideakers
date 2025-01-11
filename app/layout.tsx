@@ -9,7 +9,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Learnify by Ideakers",
-  description: "Learnify is an online personalized learning platform by Ideakers.",
+  description:
+    "Learnify is an online personalized learning platform by Ideakers.",
 };
 
 export default function RootLayout({

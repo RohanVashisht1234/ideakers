@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
             ? error.message
             : "Failed to generate projects",
       },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }

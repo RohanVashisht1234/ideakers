@@ -1,36 +1,32 @@
 // app/dashboard/generate-project/page.tsx
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import { 
-  Button, 
-  Card, 
-  Select, 
-  Label, 
-  Flowbite, 
+import {
+  Button,
+  Card,
+  Select,
+  Label,
+  Flowbite,
   TextInput,
   Badge,
   Spinner,
-  DarkThemeToggle 
+  DarkThemeToggle,
 } from "flowbite-react";
-import { 
-  HiSearch, 
-  HiChip, 
-  HiLightningBolt, 
-  HiCode, 
+import {
+  HiSearch,
+  HiChip,
+  HiLightningBolt,
+  HiCode,
   HiClock,
   HiUser,
-  HiAcademicCap 
-} from 'react-icons/hi';
-import Link from 'next/link';
+  HiAcademicCap,
+} from "react-icons/hi";
+import Link from "next/link";
 
-const DIFFICULTIES = [
-  "Beginner", 
-  "Intermediate", 
-  "Advanced"
-];
+const DIFFICULTIES = ["Beginner", "Intermediate", "Advanced"];
 
 export default function ProjectGeneratorPage() {
   const currentDate = new Date("2025-01-10T22:26:08Z");
@@ -39,9 +35,9 @@ export default function ProjectGeneratorPage() {
   const { status, data: session } = useSession();
   const router = useRouter();
 
-  const [field, setField] = useState('');
-  const [language, setLanguage] = useState('');
-  const [projectDifficulty, setProjectDifficulty] = useState('Beginner');
+  const [field, setField] = useState("");
+  const [language, setLanguage] = useState("");
+  const [projectDifficulty, setProjectDifficulty] = useState("Beginner");
   const [generatedProjects, setGeneratedProjects] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -63,18 +59,18 @@ export default function ProjectGeneratorPage() {
     setError(null);
 
     try {
-      const response = await fetch('/api/generate-project', {
-        method: 'POST',
+      const response = await fetch("/api/generate-project", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${session?.user?.email}`
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session?.user?.email}`,
         },
         body: JSON.stringify({
           field,
           language,
           difficulty: projectDifficulty,
-          userEmail: session?.user?.email
-        })
+          userEmail: session?.user?.email,
+        }),
       });
 
       if (!response.ok) {
@@ -91,14 +87,16 @@ export default function ProjectGeneratorPage() {
         throw new Error(data.error);
       }
 
-      const projects = Array.isArray(data.projects) 
-        ? data.projects 
+      const projects = Array.isArray(data.projects)
+        ? data.projects
         : JSON.parse(data.projects);
 
       setGeneratedProjects(projects);
     } catch (error) {
       console.error("Project generation failed", error);
-      setError(error instanceof Error ? error.message : "Failed to generate projects");
+      setError(
+        error instanceof Error ? error.message : "Failed to generate projects",
+      );
       setGeneratedProjects([]);
     } finally {
       setLoading(false);
@@ -160,7 +158,11 @@ export default function ProjectGeneratorPage() {
               <div className="grid md:grid-cols-3 gap-6">
                 {/* Field Input */}
                 <div>
-                  <Label htmlFor="field" className="text-gray-700 dark:text-gray-300" value="Learning Field" />
+                  <Label
+                    htmlFor="field"
+                    className="text-gray-700 dark:text-gray-300"
+                    value="Learning Field"
+                  />
                   <TextInput
                     id="field"
                     placeholder="e.g., Web Development"
@@ -173,7 +175,11 @@ export default function ProjectGeneratorPage() {
 
                 {/* Language Input */}
                 <div>
-                  <Label htmlFor="language" className="text-gray-700 dark:text-gray-300" value="Language/Framework" />
+                  <Label
+                    htmlFor="language"
+                    className="text-gray-700 dark:text-gray-300"
+                    value="Language/Framework"
+                  />
                   <TextInput
                     id="language"
                     placeholder="e.g., React, Python"
@@ -186,15 +192,21 @@ export default function ProjectGeneratorPage() {
 
                 {/* Difficulty Selection */}
                 <div>
-                  <Label htmlFor="difficulty" className="text-gray-700 dark:text-gray-300" value="Project Difficulty" />
-                  <Select 
+                  <Label
+                    htmlFor="difficulty"
+                    className="text-gray-700 dark:text-gray-300"
+                    value="Project Difficulty"
+                  />
+                  <Select
                     id="difficulty"
                     value={projectDifficulty}
                     onChange={(e) => setProjectDifficulty(e.target.value)}
                     className="mt-1"
                   >
-                    {DIFFICULTIES.map(diff => (
-                      <option key={diff} value={diff}>{diff}</option>
+                    {DIFFICULTIES.map((diff) => (
+                      <option key={diff} value={diff}>
+                        {diff}
+                      </option>
                     ))}
                   </Select>
                 </div>
@@ -213,7 +225,7 @@ export default function ProjectGeneratorPage() {
 
               {/* Generate Button */}
               <div className="mt-6 text-center">
-                <Button 
+                <Button
                   onClick={handleGenerateProjects}
                   disabled={loading}
                   gradientDuoTone="purpleToPink"
@@ -221,7 +233,7 @@ export default function ProjectGeneratorPage() {
                   className="shadow-lg hover:shadow-purple-500/30 transition-all duration-300"
                 >
                   <HiLightningBolt className="mr-2" />
-                  {loading ? 'Generating Projects...' : 'Generate Projects'}
+                  {loading ? "Generating Projects..." : "Generate Projects"}
                 </Button>
               </div>
             </Card>
@@ -255,12 +267,17 @@ export default function ProjectGeneratorPage() {
                         Learning Objectives:
                       </h4>
                       <ul className="list-disc list-inside text-gray-600 dark:text-gray-400 mt-2">
-                        {project.learningObjectives?.map((obj: string, i: number) => (
-                          <li key={i}>{obj}</li>
-                        ))}
+                        {project.learningObjectives?.map(
+                          (obj: string, i: number) => <li key={i}>{obj}</li>,
+                        )}
                       </ul>
                     </div>
-                    <Link href={"/dashboard/take-project/"+encodeURIComponent(project.description)}> 
+                    <Link
+                      href={
+                        "/dashboard/take-project/" +
+                        encodeURIComponent(project.description)
+                      }
+                    >
                       <Button
                         gradientDuoTone="purpleToPink"
                         className="mt-4 w-full shadow-lg hover:shadow-purple-500/30 transition-all duration-300"
@@ -280,7 +297,8 @@ export default function ProjectGeneratorPage() {
             transition={{ delay: 0.5 }}
             className="mt-4 text-center text-sm text-gray-500 dark:text-gray-400"
           >
-            Project generation powered by AI • Last updated: {currentDate.toLocaleString()}
+            Project generation powered by AI • Last updated:{" "}
+            {currentDate.toLocaleString()}
           </motion.div>
         </div>
       </div>
