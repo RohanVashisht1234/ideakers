@@ -43,6 +43,14 @@ We are building a web-based game that helps users learn or upgrade a skill or to
 - Leaderboards display rankings and points after course completion.
 - Rewards such as swags, coupons, and opportunities to participate in competitions are given for high scores.
 
+### For Corporate Employees
+
+#### Corporate Problems
+
+- Boredom at work
+- Skills lagging in a fast-paced world, affecting company growth
+- Unfamiliarity among employees
+
 #### Solution
 
 - Collaborations with renowned MNCs to upskill employees.
@@ -68,16 +76,41 @@ We are building a web-based game that helps users learn or upgrade a skill or to
 
 We aim to continuously improve and expand our product to provide the best learning experience for students and employees worldwide.
 
-### For Corporate Employees
+## Installation
 
-#### Corporate Problems
+To install and set up the project locally, follow these steps:
 
-- Boredom at work
-- Skills lagging in a fast-paced world, affecting company growth
-- Unfamiliarity among employees
+1. **Clone the Repository:**
+   ```bash
+   git clone https://github.com/rohanvashisht1234/ideakers.git
+   ```
+2. **Navigate to the Project Directory:**
+   ```bash
+   cd ideakers
+   ```
+3. **Install Dependencies:**
+   ```bash
+   npm install
+   ```
+4. **Start the Development Server:**
+   ```bash
+   npm start
+   ```
+
+## Usage
+
+1. Open your web browser and navigate to `http://localhost:3000`.
+2. Select a course from the available options.
+3. Follow the instructions to complete projects and earn points.
+4. Track your progress on the leaderboard and redeem rewards.
+
+## Additional Resources
+
+- [Project Documentation](docs/documentation.md)
+- [Assets Used in the Project](docs/assets.md)
+- [Contribution Guidelines](docs/contributing.md)
+- [Code of Conduct](docs/code_of_conduct.md)
 
 ---
 
 Thank you for checking out Ideackers! We hope you find our product useful and engaging. If you have any questions or feedback, please feel free to reach out.
-
----
