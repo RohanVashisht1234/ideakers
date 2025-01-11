@@ -43,14 +43,6 @@ We are building a web-based game that helps users learn or upgrade a skill or to
 - Leaderboards display rankings and points after course completion.
 - Rewards such as swags, coupons, and opportunities to participate in competitions are given for high scores.
 
-### For Corporate Employees
-
-#### Corporate Problems
-
-- Boredom at work
-- Skills lagging in a fast-paced world, affecting company growth
-- Unfamiliarity among employees
-
 #### Solution
 
 - Collaborations with renowned MNCs to upskill employees.
@@ -75,6 +67,14 @@ We are building a web-based game that helps users learn or upgrade a skill or to
 ---
 
 We aim to continuously improve and expand our product to provide the best learning experience for students and employees worldwide.
+
+### For Corporate Employees
+
+#### Corporate Problems
+
+- Boredom at work
+- Skills lagging in a fast-paced world, affecting company growth
+- Unfamiliarity among employees
 
 ---
 
