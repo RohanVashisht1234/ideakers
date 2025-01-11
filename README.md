@@ -1,3 +1,5 @@
+![image](https://github.com/user-attachments/assets/b6f77ac4-3df5-4219-8873-bde344e8172e)
+
 # IDEACKERS
 
 Welcome to Ideackers! This project was developed for the ISTD Hackathon to gamify the learning experience and make skill development fun and engaging.
