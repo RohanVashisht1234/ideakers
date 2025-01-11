@@ -54,8 +54,6 @@ We are building a web-based game that helps users learn or upgrade a skill or to
 
 ## Future Plan
 
----
-
 We aim to continuously improve and expand our product to provide the best learning experience for students and employees worldwide.
 
 ### For Corporate Employees
@@ -75,6 +73,8 @@ We aim to continuously improve and expand our product to provide the best learni
 - Teams can compete in events and hackathons for bigger prizes and goodies.
 - Unfair means while upskilling lead to point and exp deductions and potential negative badges.
 - Employees moving to other collaborating MNCs retain their previously achieved badges.
+
+---
 
 ## Installation
 
